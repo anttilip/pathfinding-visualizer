@@ -20,11 +20,23 @@ class Visualizer {
     draw() {
         this.graph.draw(this.canvas);
     }
+
+    run() {
+        alert("Run not implemented yet!");
+    }
+
+    clearGraph() {
+        this.graph = new Graph(this.graph.size);
+    }
 }
 
-var canvas = document.getElementById("main-canvas");
-var visualizer = new Visualizer(canvas);
-var loop = setInterval(function() {
+let canvas = document.getElementById("main-canvas");
+let visualizer = new Visualizer(canvas);
+setInterval(function() {
     visualizer.update();
     visualizer.draw();
 }, 0);
+
+// Set buttons to run functions
+document.getElementById("run").onclick = () => visualizer.run();
+document.getElementById("clear").onclick = () => visualizer.clearGraph();
