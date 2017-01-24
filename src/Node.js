@@ -1,11 +1,11 @@
 var nodeType = {
     EMPTY: {
         code: 'E',
-        color: '#ffffff'
+        color: '#303030'
     },
     WALL: {
         code: 'W',
-        color: '#262626'
+        color: '#dedede'
     },
     START: {
         code: 'S',

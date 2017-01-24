@@ -4,7 +4,7 @@ class Graph {
         this.nodes = this.createGraph(size);
         this.setStartNode(this.nodes[0][0]);
         this.setGoalNode(this.nodes[this.size - 1][this.size - 1]);
-        this.offset = 1;
+        this.offset = 0;
         this.nodeSize = Math.floor(Math.min(canvas.width, canvas.height) / (size + (this.offset + 1)));
         this.currentlyDrawing = false;
         this.drawingType = nodeType.WALL;
