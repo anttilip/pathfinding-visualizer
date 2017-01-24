@@ -64,7 +64,7 @@ class Graph {
 
     outOfBounds(x, y, size) {
         var limit = size * (this.nodeSize + this.offset) - 1;
-        return x > limit || y > limit;
+        return x < 0 || x > limit || y < 0 || y > limit;
     }
 
     screenToGraph(x) {
