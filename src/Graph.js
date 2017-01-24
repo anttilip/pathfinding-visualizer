@@ -2,6 +2,8 @@ class Graph {
     constructor(size) {
         this.size = size;
         this.nodes = this.createGraph(size);
+        this.setStartNode(this.nodes[0][0]);
+        this.setGoalNode(this.nodes[this.size - 1][this.size - 1]);
         this.offset = 1;
         this.nodeSize = Math.floor(Math.min(canvas.width, canvas.height) / (size + (this.offset + 1)));
         this.currentlyDrawing = false;
@@ -56,10 +58,18 @@ class Graph {
                 nodes[i][j] = new Node(i, j);
             }
         }
-        // Set start and goal nodes in opposing corners
-        nodes[0][0].type = nodeType.START;
-        nodes[this.size - 1][this.size - 1].type = nodeType.GOAL;
+
         return nodes;
+    }
+
+    setStartNode(node) {
+        node.type = nodeType.START;
+        this.startNode = node;
+    }
+
+    setGoalNode(node) {
+        node.type = nodeType.GOAL;
+        this.goalNode = node;
     }
 
     outOfBounds(x, y, size) {
