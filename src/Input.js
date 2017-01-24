@@ -1,22 +1,20 @@
-function Input(canvas) {
-    this.x = 0;
-    this.y = 0;
-    this.isDragging = false;
+class Input {
+    constructor() {
+        this.x = 0;
+        this.y = 0;
+        this.isDragging = false;
+        this.createListeners();
+    }
 
-    // For some reason this.x does not work with eventListeners
-    var _this = this;
+    createListeners() {
+        addEventListener('mousedown', () => this.isDragging = true);
 
-    addEventListener('mousedown', function() {
-        _this.isDragging = true;
-    });
+        addEventListener('mouseup', () => this.isDragging = false);
 
-    addEventListener('mouseup', function() {
-        _this.isDragging = false;
-    });
-
-    canvas.addEventListener('mousemove', function(evt) {
-        var rect = canvas.getBoundingClientRect();
-        _this.x = evt.clientX - rect.left;
-        _this.y = evt.clientY - rect.top;
-    });
+        addEventListener('mousemove', (evt) => {
+            var rect = canvas.getBoundingClientRect();
+            this.x = evt.clientX - rect.left;
+            this.y = evt.clientY - rect.top;
+        });
+    }
 }
