@@ -6,6 +6,8 @@ function Visualizer(canvas) {
     this.canvas.width = 768;
     this.canvas.height = 768;
 
+    this.graph = new Graph(32);
+
     this.update = function() {
         // Update graph and algorithms
     };
