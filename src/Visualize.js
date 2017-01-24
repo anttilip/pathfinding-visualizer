@@ -9,11 +9,16 @@ function Visualizer(canvas) {
     this.graph = new Graph(32);
 
     this.update = function() {
-        // Update graph and algorithms
+        if (this.input.isDragging) {
+            this.graph.update(this.input.x, this.input.y);
+        } else {
+            // Dragging stopped
+            this.graph.clearCurrentDrawing();
+        }
     };
 
     this.draw = function() {
-        // Draw graph
+        this.graph.draw(this.canvas);
     };
 }
 
