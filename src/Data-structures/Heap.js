@@ -1,5 +1,5 @@
 class Heap {
-    constructor(size = 3) {
+    constructor(size = 32) {
         this.array = new Array(size);
         this.size = 0;
         // Functions to find nodes parent and childs given its index
