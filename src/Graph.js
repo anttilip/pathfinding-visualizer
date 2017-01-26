@@ -1,7 +1,7 @@
 class Graph {
     constructor(size) {
         this.size = size;
-        this.nodes = this.createGraph(size);
+        this.nodes = this._createGraph(size);
         this.setStartNode(this.nodes[0][0]);
         this.setGoalNode(this.nodes[this.size - 1][this.size - 1]);
         this.offset = 0;
@@ -11,13 +11,13 @@ class Graph {
     }
 
     update(x, y) {
-        if (this.outOfBounds(x, y, this.size)) {
+        if (this._outOfBounds(x, y)) {
             return;
         }
         // Convert screen coordinates to graph values
-        var screenCoordinates = this.screenToGraph(x, y);
-        x = this.screenToGraph(x);
-        y = this.screenToGraph(y);
+        var screenCoordinates = this._screenToGraph(x, y);
+        x = this._screenToGraph(x);
+        y = this._screenToGraph(y);
         var node = this.nodes[x][y];
 
         // Determine which color to draw
@@ -49,7 +49,7 @@ class Graph {
         }
     }
 
-    createGraph() {
+    _createGraph() {
         // 2D node array
         var nodes = new Array(this.size);
         for (var i = 0; i < this.size; i++) {
@@ -72,12 +72,12 @@ class Graph {
         this.goalNode = node;
     }
 
-    outOfBounds(x, y, size) {
-        var limit = size * (this.nodeSize + this.offset) - 1;
+    _outOfBounds(x, y) {
+        var limit = this.size * (this.nodeSize + this.offset) - 1;
         return x < 0 || x > limit || y < 0 || y > limit;
     }
 
-    screenToGraph(x) {
+    _screenToGraph(x) {
         return Math.floor(x / (this.nodeSize + this.offset));
     }
 
