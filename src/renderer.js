@@ -1,4 +1,4 @@
-class Visualizer {
+class Renderer {
     constructor(canvas) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
@@ -45,12 +45,12 @@ class Visualizer {
 }
 
 let canvas = document.getElementById("main-canvas");
-let visualizer = new Visualizer(canvas);
+let renderer = new Renderer(canvas);
 setInterval(function() {
-    visualizer.update();
-    visualizer.draw();
+    renderer.update();
+    renderer.draw();
 }, 0);
 
 // Set buttons to run functions
-document.getElementById("run").onclick = () => visualizer.run();
-document.getElementById("clear").onclick = () => visualizer.clearGraph();
+document.getElementById("run").onclick = () => renderer.run();
+document.getElementById("clear").onclick = () => renderer.clearGraph();
