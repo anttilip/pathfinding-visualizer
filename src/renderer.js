@@ -24,7 +24,6 @@ class Visualizer {
     run() {
         var dijkstra = new Dijkstra();
         var prev = dijkstra.findShortestPath(this.graph);
-
         var flatten = (node) => ((node.x) * this.graph.size + node.y);
 
         var path = [];
