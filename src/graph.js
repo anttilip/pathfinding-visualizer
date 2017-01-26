@@ -2,24 +2,13 @@ class Graph {
     constructor(size) {
         this.size = size;
         this.nodes = this._createGraph(size);
-        this.setStartNode(this.nodes[0][0]);
-        this.setGoalNode(this.nodes[this.size - 1][this.size - 1]);
-        this.offset = 0;
-        this.nodeSize = Math.floor(Math.min(canvas.width, canvas.height) / (size + (this.offset + 1)));
+        this.nodeSize = Math.floor(canvas.height / size);
         this.currentlyDrawing = false;
         this.drawingType = nodeType.WALL;
     }
 
-    update(x, y) {
-        if (this._outOfBounds(x, y)) {
-            return;
-        }
-        // Convert screen coordinates to graph values
-        var screenCoordinates = this._screenToGraph(x, y);
-        x = this._screenToGraph(x);
-        y = this._screenToGraph(y);
+    toggleNode(x, y) {
         var node = this.nodes[x][y];
-
         // Determine which color to draw
         if (!this.currentlyDrawing) {
             if (node.type == nodeType.EMPTY) {
@@ -42,8 +31,7 @@ class Graph {
                 var node = this.nodes[i][j];
                 // Draw nodes in grid in their types color
                 context.fillStyle = node.type.color;
-                var multiplier = this.nodeSize + this.offset;
-                context.fillRect(node.x * multiplier, node.y * multiplier,
+                context.fillRect(node.x * this.nodeSize, node.y * this.nodeSize,
                     this.nodeSize, this.nodeSize);
             }
         }
@@ -58,6 +46,12 @@ class Graph {
                 nodes[i][j] = new Node(i, j);
             }
         }
+
+        // Set start and goal nodes
+        this.startNode = nodes[0][0];
+        this.startNode.type = nodeType.START;
+        this.goalNode = nodes[this.size - 1][this.size - 1];
+        this.goalNode.type = nodeType.GOAL;
 
         return nodes;
     }
@@ -114,26 +108,16 @@ class Graph {
         return type == nodeType.EMPTY || type == nodeType.GOAL;
     }
 
-    setStartNode(node) {
-        node.type = nodeType.START;
-        this.startNode = node;
-    }
-
-    setGoalNode(node) {
-        node.type = nodeType.GOAL;
-        this.goalNode = node;
-    }
-
     _outOfBounds(x, y) {
-        var limit = this.size * (this.nodeSize + this.offset) - 1;
+        var limit = this.size * this.nodeSize - 1;
         return x < 0 || x > limit || y < 0 || y > limit;
     }
 
-    _screenToGraph(x) {
-        return Math.floor(x / (this.nodeSize + this.offset));
+    screenToGraph(x) {
+        return Math.floor(x / this.nodeSize);
     }
 
-    clearCurrentDrawing() {
-        this.currentlyDrawing = false;
+    clearGraph() {
+        this.nodes = this._createGraph();
     }
 }

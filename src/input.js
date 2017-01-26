@@ -1,20 +1,46 @@
 class Input {
-    constructor() {
-        this.x = 0;
-        this.y = 0;
+    constructor(canvas, graph) {
+        this.graph = graph;
         this.isDragging = false;
-        this.createListeners();
+        this._createListeners(canvas);
     }
 
-    createListeners() {
-        addEventListener('mousedown', () => this.isDragging = true);
+    _onUpdate(xScreen, yScreen) {
+        var xGrid = this.graph.screenToGraph(xScreen);
+        var yGrid = this.graph.screenToGraph(yScreen);
+        if (renderer.mode == mode.EDIT) {
+            this.graph.toggleNode(xGrid, yGrid);
+        } else if (renderer.mode == mode.VISUALIZE) {
+            renderer.mode = mode.EDIT;
+        }
+    }
 
-        addEventListener('mouseup', () => this.isDragging = false);
+    _getMouseCoordinates(evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    }
+    _createListeners(canvas) {
+        canvas.addEventListener('mousedown', (evt) => {
+            this.isDragging = true;
+            // alert('mousedown');
+            var coord = this._getMouseCoordinates(evt);
+            this._onUpdate(coord.x, coord.y);
+        });
 
-        addEventListener('mousemove', (evt) => {
-            var rect = canvas.getBoundingClientRect();
-            this.x = evt.clientX - rect.left;
-            this.y = evt.clientY - rect.top;
+        addEventListener('mouseup', () => {
+            this.isDragging = false;
+            this.graph.currentlyDrawing = false;
+        });
+
+        canvas.addEventListener('mousemove', (evt) => {
+            if (this.isDragging) {
+                // alert('mousemove');
+                var coord = this._getMouseCoordinates(evt);
+                this._onUpdate(coord.x, coord.y);
+            }
         });
     }
 }

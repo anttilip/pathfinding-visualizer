@@ -1,29 +1,37 @@
+var mode = {
+    EDIT: 0,
+    VISUALIZE: 1,
+    RUN: 2
+};
+
 class Renderer {
     constructor(canvas) {
         this.canvas = canvas;
-        this.context = canvas.getContext("2d");
-        this.input = new Input();
         this.canvas.width = 768;
         this.canvas.height = 768;
-        this.graph = new Graph(64);
-    }
+        this.context = canvas.getContext("2d");
 
-    update() {
-        if (this.input.isDragging) {
-            this.graph.update(this.input.x, this.input.y);
-        } else {
-            // Dragging stopped
-            this.graph.clearCurrentDrawing();
-        }
+        this.graph = new Graph(64);
+        this.input = new Input(canvas, this.graph);
+        this.mode = mode.EDIT;
     }
 
     draw() {
         this.graph.draw(this.canvas);
+        if (this.mode == mode.VISUALIZE) {
+            // Draw visualizer
+        }
     }
 
     run() {
+        this.mode = mode.RUN;
         var dijkstra = new Dijkstra();
-        var prev = dijkstra.findShortestPath(this.graph);
+        var t0 = performance.now();
+        var result = dijkstra.findShortestPath(this.graph);
+        var prev = result.prev
+        var deltaTime = performance.now() - t0;
+
+
         var flatten = (node) => ((node.x) * this.graph.size + node.y);
 
         var path = [];
@@ -34,20 +42,23 @@ class Renderer {
             i = prev[flatten(i)];
         }
 
-        alert('Length: ' + path.length);
+        alert('Length: ' + path.length + ', took ' + Math.round(deltaTime) + ' ms.');
         console.log(path);
         console.log(path.length);
+        //this._visualize(path);
+        this.mode = mode.VISUALIZE;
     }
 
     clearGraph() {
-        this.graph = new Graph(this.graph.size);
+        this.graph.clearGraph();
+        this.mode = mode.EDIT;
     }
 }
 
 let canvas = document.getElementById("main-canvas");
 let renderer = new Renderer(canvas);
 setInterval(function() {
-    renderer.update();
+    // renderer.update();
     renderer.draw();
 }, 0);
 
