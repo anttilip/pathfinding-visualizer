@@ -12,7 +12,7 @@ class Heap {
         // Increase heap size by one and expand array when needed
         this.size++;
         if (this.size > this.array.length) {
-            this.expandArray();
+            this._expandArray(this.array);
         }
         // Starting from bottom go up parent chains until parent has smaller
         // key or end up in top
@@ -38,23 +38,25 @@ class Heap {
         }
         // Pick the top value
         var top = this.array[0];
+
         // Save bottom value and set it to the new top
         var movingNode = this.array[this.size - 1];
         this.array[0] = movingNode;
-        // Remove old value from the bottom
-        // TODO: tarviikohan ees poistaa ku indeksi kuitenkin muuttuu
-        this.array[this.size - 1] = undefined;
+
         // Decrease heap size by one
         this.size--;
-        var i = 0;
+
         // Move the new top node to its own place
         // Starting from top node, check that both children are smaller than
         // current node. If not, switch them and repeat.
+        var i = 0;
         while (this.left(i) < this.size) {
+            // Calculate children's indexes
             var leftIndex = this.left(i);
             var rightIndex = this.right(i);
-            var smallerIndex;
+
             // Choose smaller child node
+            var smallerIndex;
             if (rightIndex < this.size && this.array[rightIndex].key < this.array[leftIndex].key) {
                 smallerIndex = rightIndex;
             } else {
@@ -80,7 +82,7 @@ class Heap {
         return top;
     }
 
-    expandArray() {
+    _expandArray() {
         // When array is full, double its length and copy contents from old
         // array to the new, larger one
         var newArray = new Array(this.array.length * 2);
@@ -88,5 +90,11 @@ class Heap {
             newArray[i] = this.array[i];
         }
         this.array = newArray;
+    }
+
+    pushAll(array) {
+        for (var i = 0; i < array.length; i++) {
+            this.push(array[i]);
+        }
     }
 }
