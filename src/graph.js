@@ -1,8 +1,8 @@
 class Graph {
     constructor(size) {
         this.size = size;
-        this.nodes = this._createGraph(size);
         this.nodeSize = Math.floor(canvas.height / size);
+        this.nodes = this._createGraph(size);
         this.currentlyDrawing = false;
         this.drawingType = nodeType.WALL;
     }
