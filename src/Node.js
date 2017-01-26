@@ -23,4 +23,20 @@ class Node {
         this.y = y;
         this.type = nodeType.EMPTY;
     }
+
+    hashCode() {
+        const prime = 31;
+        var hash = 1;
+        hash = prime * hash + this.x;
+        hash = prime * hash + this.y;
+        return prime * hash + this.type.code.charCodeAt(0);
+
+    }
+
+    equals(other) {
+        if (other instanceof Node) {
+            return other.x == this.x && other.y == this.y && other.type == this.type;
+        }
+        return false;
+    }
 }
