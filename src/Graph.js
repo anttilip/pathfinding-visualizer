@@ -62,6 +62,58 @@ class Graph {
         return nodes;
     }
 
+    getNodesNeighbours(node) {
+        var neighbours = [];
+        var left, right, top, bottom;
+        var x = node.x;
+        var y = node.y;
+        // Left
+        if (this._isEmpty(x - 1, y)) {
+            neighbours.push(this.nodes[x - 1][y]);
+            left = true;
+        }
+        // Right
+        if (this._isEmpty(x + 1, y)) {
+            neighbours.push(this.nodes[x + 1][y]);
+            right = true;
+        }
+        // Top
+        if (this._isEmpty(x, y - 1)) {
+            neighbours.push(this.nodes[x][y - 1]);
+            top = true;
+        }
+        // Bottom
+        if (this._isEmpty(x, y + 1)) {
+            neighbours.push(this.nodes[x][y + 1]);
+            bottom = true;
+        }
+        // Top Left
+        if (this._isEmpty(x - 1, y - 1) && (top || left)) {
+            neighbours.push(this.nodes[x - 1][y - 1]);
+        }
+        // Top right
+        if (this._isEmpty(x + 1, y - 1) && (top || right)) {
+            neighbours.push(this.nodes[x + 1][y - 1]);
+        }
+        // Bottom left
+        if (this._isEmpty(x - 1, y + 1) && (bottom || left)) {
+            neighbours.push(this.nodes[x - 1][y + 1]);
+        }
+        // Bottom right
+        if (this._isEmpty(x + 1, y + 1) && (bottom || right)) {
+            neighbours.push(this.nodes[x + 1][y + 1]);
+        }
+        return neighbours;
+    }
+
+    _isEmpty(x, y) {
+        if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1) {
+            return false;
+        }
+        var type = this.nodes[x][y].type;
+        return type == nodeType.EMPTY || type == nodeType.GOAL;
+    }
+
     setStartNode(node) {
         node.type = nodeType.START;
         this.startNode = node;
