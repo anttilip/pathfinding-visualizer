@@ -1,21 +1,25 @@
 class Dijkstra {
     findShortestPath(graph) {
         var nodes = new Heap();
-        var dist = new Array(graph.size * graph.size);
+        this.graph = graph;
+        this.dist = new Array(graph.size * graph.size);
         var prev = new Array(graph.size * graph.size);
         // TODO: implementoi oma hash set
         var alreadySeen = new Set();
+        // TODO: implement dynamic array
+        // This is just for visualization purposes
+        var seenList = Array(graph.size * graph.size);
 
         // Convert node to 1D array index
         var flatten = (node) => (node.x * graph.size + node.y);
 
         // Initialize distances
-        for (var i = 0; i < dist.length; i++) {
-            dist[i] = Infinity
+        for (var i = 0; i < this.dist.length; i++) {
+            this.dist[i] = Infinity
         }
 
         // Set start node distance to 0 and push it to heap
-        dist[flatten(graph.startNode)] = 0;
+        this.dist[flatten(graph.startNode)] = 0;
         nodes.push(0, graph.startNode);
 
         // Main loop
@@ -28,26 +32,41 @@ class Dijkstra {
                 var neighbour = neighbours[i];
                 // TODO: add different weight for diagonals, i.e. sqrt(2)
                 // Neighbours distance will be current nodes distance + 1
-                var neighboursDistance = dist[flatten(node)] + 1;
+                var neighboursDistance = this._getWeight(node, neighbour);
                 // If neighbour is already visited, this path must be longer so
                 // no need to continue checking it.
                 if (!alreadySeen.has(neighbour)) {
                     // Save neighbours distance
-                    dist[flatten(neighbour)] = neighboursDistance;
+                    this.dist[flatten(neighbour)] = neighboursDistance;
                     // Set neighbours "parent" node to current node
                     prev[flatten(neighbour)] = node;
                     if (graph.goalNode.equals(neighbour)) {
                         // Goal node was found, return prev to find out path
-                        return prev;
+                        return {
+                            prev: prev,
+                            dist: this.dist,
+                            seenList: seenList
+                        };
                     }
                     // Set neighbour to seen
                     alreadySeen.add(neighbour);
+                    seenList.push(neighbour);
                     // Push neighbour to heap with its distance as a key
                     nodes.push(neighboursDistance, neighbour);
                 }
             }
         }
         // Goal node was not found, i.e. path does not exist.
-        return prev;
+        return {
+            prev: prev,
+            dist: this.dist,
+            seenList: seenList
+        };
+    }
+
+    _getWeight(node, next) {
+        var flatten = (node) => (node.x * this.graph.size + node.y);
+        var weight = node.x == next.x || node.y == next.y ? 1 : 1.414
+        return this.dist[flatten(node)] + weight;
     }
 }
