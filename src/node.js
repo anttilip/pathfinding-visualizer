@@ -39,4 +39,12 @@ class Node {
         }
         return false;
     }
+
+    draw(context, nodeSize, color = undefined) {
+        if (color === undefined) {
+            color = this.type.color;
+        }
+        context.fillStyle = color;
+        context.fillRect(this.x * nodeSize, this.y * nodeSize, nodeSize, nodeSize);
+    }
 }

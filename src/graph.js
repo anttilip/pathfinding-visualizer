@@ -30,9 +30,7 @@ class Graph {
             for (var j = 0; j < this.nodes[i].length; j++) {
                 var node = this.nodes[i][j];
                 // Draw nodes in grid in their types color
-                context.fillStyle = node.type.color;
-                context.fillRect(node.x * this.nodeSize, node.y * this.nodeSize,
-                    this.nodeSize, this.nodeSize);
+                node.draw(context, this.nodeSize);
             }
         }
     }
