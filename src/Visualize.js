@@ -5,7 +5,7 @@ class Visualizer {
         this.input = new Input();
         this.canvas.width = 768;
         this.canvas.height = 768;
-        this.graph = new Graph(32);
+        this.graph = new Graph(64);
     }
 
     update() {
@@ -22,7 +22,22 @@ class Visualizer {
     }
 
     run() {
-        alert("Run not implemented yet!");
+        var dijkstra = new Dijkstra();
+        var prev = dijkstra.findShortestPath(this.graph);
+
+        var flatten = (node) => ((node.x) * this.graph.size + node.y);
+
+        var path = [];
+        var i = this.graph.goalNode;
+
+        while (prev[flatten(i)] !== undefined) {
+            path.push(i);
+            i = prev[flatten(i)];
+        }
+
+        alert('Length: ' + path.length);
+        console.log(path);
+        console.log(path.length);
     }
 
     clearGraph() {
