@@ -17,9 +17,14 @@ class Renderer {
         this.mode = mode.EDIT;
     }
 
-    update() {
+    update(speed) {
         if (this.mode == mode.VISUALIZE) {
-            this.visualizer.tick(this.canvas, 1);
+            // Convert speed slider to logarithmic
+            var multplier = Math.log(this.graph.size) / 100;
+            var adjustedSpeed = Math.exp(multplier * speed) - 1;
+            // Advance visualization
+            this.visualizer.tick(this.canvas, adjustedSpeed);
+
             if (this.visualizer.visualizationComplete()) {
                 this.mode = mode.IDLE;
             }
@@ -54,8 +59,9 @@ class Renderer {
 
 let canvas = document.getElementById("main-canvas");
 let renderer = new Renderer(canvas);
+let speedSlider = document.querySelector("#speedSlider");
 setInterval(() => {
-    renderer.update();
+    renderer.update(speedSlider.value);
     renderer.draw();
 }, 0);
 
