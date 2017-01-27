@@ -1,7 +1,7 @@
 var mode = {
     EDIT: 0,
     VISUALIZE: 1,
-    RUN: 2
+    IDLE: 2
 };
 
 class Renderer {
@@ -17,15 +17,24 @@ class Renderer {
         this.mode = mode.EDIT;
     }
 
-    draw() {
-        this.graph.draw(this.canvas);
+    update() {
         if (this.mode == mode.VISUALIZE) {
-            this.visualizer.draw(this.canvas);
+            this.visualizer.tick(this.canvas, 1);
+            if (this.visualizer.visualizationComplete()) {
+                this.mode = mode.IDLE;
+            }
+        }
+    }
+
+    draw() {
+        if (this.mode == mode.EDIT) {
+            this.graph.draw(this.canvas);
         }
     }
 
     run() {
-        this.mode = mode.RUN;
+        // Draw over old search before new search
+        this.graph.draw(this.canvas);
         var dijkstra = new Dijkstra();
         var t0 = performance.now();
         var result = dijkstra.findShortestPath(this.graph);
@@ -33,8 +42,8 @@ class Renderer {
 
         alert('Took: ' + Math.round(deltaTime) + ' ms.');
 
-        this.mode = mode.VISUALIZE;
         this.visualizer = new Visualizer(result, this.graph);
+        this.mode = mode.VISUALIZE;
     }
 
     clearGraph() {
@@ -45,8 +54,8 @@ class Renderer {
 
 let canvas = document.getElementById("main-canvas");
 let renderer = new Renderer(canvas);
-setInterval(function() {
-    // renderer.update();
+setInterval(() => {
+    renderer.update();
     renderer.draw();
 }, 0);
 

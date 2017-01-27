@@ -10,7 +10,7 @@ class Input {
         var yGrid = this.graph.screenToGraph(yScreen);
         if (renderer.mode == mode.EDIT) {
             this.graph.toggleNode(xGrid, yGrid);
-        } else if (renderer.mode == mode.VISUALIZE) {
+        } else {
             renderer.mode = mode.EDIT;
         }
     }

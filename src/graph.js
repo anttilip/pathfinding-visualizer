@@ -115,6 +115,10 @@ class Graph {
         return Math.floor(x / this.nodeSize);
     }
 
+    graphToScreen(x) {
+        return x * this.nodeSize;
+    }
+
     clearGraph() {
         this.nodes = this._createGraph();
     }

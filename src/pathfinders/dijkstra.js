@@ -8,7 +8,7 @@ class Dijkstra {
         var alreadySeen = new Set();
         // TODO: implement dynamic array
         // This is just for visualization purposes
-        var seenList = Array(graph.size * graph.size);
+        var seenList = [];
 
         // Convert node to 1D array index
         var flatten = (node) => (node.x * graph.size + node.y);
