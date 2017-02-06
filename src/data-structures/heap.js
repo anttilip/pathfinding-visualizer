@@ -91,10 +91,4 @@ class Heap {
         }
         this.array = newArray;
     }
-
-    pushAll(array) {
-        for (var i = 0; i < array.length; i++) {
-            this.push(array[i]);
-        }
-    }
 }
