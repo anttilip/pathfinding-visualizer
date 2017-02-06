@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mocha Tests</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script>mocha.setup('bdd')</script>
+
+    <!-- Source -->
+    <script src="../src/data-structures/heap.js"></script>
+    <script src="../src/core/node.js"></script>
+    <script src="../src/core/graph.js"></script>
+    <script src="../src/utils/helpers.js"></script>
+    <script src="../src/pathfinders/dijkstra.js"></script>
+
+    <!-- Test -->
+    <script src="pathfinders/mazes.js"></script>
+    <script src="data-structures/heapTest.js"></script>
+    <script src="core/graphTest.js"></script>
+    <script src="core/nodeTest.js"></script>
+    <script src="pathfinders/dijkstraTest.js"></script>
+
+    <script>
+      const assert = chai.assert;
+      const expect = chai.expect;
+      mocha.run();
+    </script>
+    <canvas id="main-canvas"/>
+  </body>
+</html>
