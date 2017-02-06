@@ -11,7 +11,7 @@ class Renderer {
         this.canvas.height = 768;
         this.context = canvas.getContext("2d");
 
-        this.graph = new Graph(64);
+        this.graph = new Graph(32);
         this.input = new Input(canvas, this.graph);
         this.visualizer = undefined;
         this.mode = mode.EDIT;
