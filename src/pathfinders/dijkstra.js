@@ -1,4 +1,10 @@
+/** Dijkstra's algorithm. */
 class Dijkstra {
+    /**
+     * Find shortest path given a graph.
+     * @param {Graph} graph - Graph on which path is searched.
+     * @return {{Array.<{prev: Array, dist: Array, seenList: Array}>}} Result
+     */
     findShortestPath(graph) {
         var nodes = new Heap();
         this.graph = graph;

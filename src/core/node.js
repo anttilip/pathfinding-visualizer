@@ -17,7 +17,13 @@ var nodeType = {
     }
 };
 
+/** Class representing a node on graph / grid. */
 class Node {
+    /**
+     * Create node.
+     * @param {number} x - The x coordinate
+     * @param {number} y - The y coordinate
+     */
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -33,6 +39,11 @@ class Node {
 
     }
 
+    /**
+     * Check equality with other node.
+     * @param {Node} other - The other node.
+     * @return {boolean} Equality between this and other node.
+     */
     equals(other) {
         if (other instanceof Node) {
             return other.x == this.x && other.y == this.y && other.type == this.type;
@@ -40,6 +51,12 @@ class Node {
         return false;
     }
 
+    /**
+     * Draws the node on canvas.
+     * @param {CanvasRenderingContext2D} context - Context on which node is drawn.
+     * @param {number} nodeSize - Node size when drawn on canvas.
+     * @param {string} color  - Hex color or e.g hsl(50, 50%, 100%).
+     */
     draw(context, nodeSize, color = undefined) {
         if (color === undefined) {
             color = this.type.color;

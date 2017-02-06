@@ -1,13 +1,24 @@
+/** Binary minimum heap. */
 class Heap {
+    /**
+     * Create Heap
+     * @param {number} [size=32] - Initial size of the internal array.
+     */
     constructor(size = 32) {
         this.array = new Array(size);
         this.size = 0;
+
         // Functions to find nodes parent and childs given its index
         this.parent = (i) => Math.floor(i / 2);
         this.left = (i) => (2 * i + 1);
         this.right = (i) => (2 * i + 2);
     }
 
+    /**
+     * Add node to Heap with given key.
+     * @param {number} key - Value on which nodes are evaluated.
+     * @param {Node} node - Node that will be added to Heap.
+     */
     push(key, node) {
         // Increase heap size by one and expand array when needed
         this.size++;
@@ -30,6 +41,11 @@ class Heap {
             node: node
         };
     }
+
+    /**
+     * Remove and return node with smallest key.
+     * @return {Array<key: number, node: Node>} Key and node.
+     */
 
     pop() {
         // If heap is empty, there is nothing to pop
@@ -82,9 +98,9 @@ class Heap {
         return top;
     }
 
+    // When array is full, double its length and copy contents from old
+    // array to the new, larger one
     _expandArray() {
-        // When array is full, double its length and copy contents from old
-        // array to the new, larger one
         var newArray = new Array(this.array.length * 2);
         for (var i = 0; i < this.array.length; i++) {
             newArray[i] = this.array[i];

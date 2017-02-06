@@ -1,10 +1,19 @@
+/** Class handilng input. */
 class Input {
+    /**
+     * Create Input.
+     * @param {Canvas} canvas: canvas on which graph is drawn.
+     * @param {Graph} graph: graph which contains all the nodes.
+     */
     constructor(canvas, graph) {
         this.graph = graph;
         this.isDragging = false;
         this._createListeners(canvas);
     }
 
+
+    // Takes screen x and y, converts them to graph coords
+    // and manipulates graph.
     _onUpdate(xScreen, yScreen) {
         var xGrid = this.graph.screenToGraph(xScreen);
         var yGrid = this.graph.screenToGraph(yScreen);
@@ -22,6 +31,8 @@ class Input {
             y: evt.clientY - rect.top
         };
     }
+
+    // Event listeners react to user input
     _createListeners(canvas) {
         canvas.addEventListener('mousedown', (evt) => {
             this.isDragging = true;
