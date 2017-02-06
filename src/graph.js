@@ -1,10 +1,49 @@
+/** Class representing a graph or grid. */
 class Graph {
-    constructor(size) {
-        this.size = size;
-        this.nodeSize = Math.floor(canvas.height / size);
-        this.nodes = this._createGraph(size);
+    constructor(size = undefined, matrix = undefined) {
+        if (size !== undefined) {
+            this._init(size);
+        } else if (matrix !== undefined) {
+            this._initFromMatrix(matrix);
+        } else {
+            throw "Pass either size or matrix to Graph";
+        }
+        // Some gui helpers
         this.currentlyDrawing = false;
+        this.nodeSize = Math.floor(canvas.height / this.size);
         this.drawingType = nodeType.WALL;
+    }
+
+    _init(size) {
+        this.size = size;
+        this.nodes = this._createGraph(size);
+    }
+
+    _initFromMatrix(matrix) {
+        this.size = matrix.length;
+        this.nodes = this._createGraph(this.size);
+
+        this._setTypes(matrix);
+    }
+
+    _setTypes(matrix) {
+        for (var i = 0; i < matrix.length; i++) {
+            for (var j = 0; j < matrix.length; j++) {
+                switch (matrix[i][j]) {
+                    case nodeType.START.code:
+                        this.nodes[i][j].type = nodeType.START;
+                        break;
+                    case nodeType.GOAL.code:
+                        this.nodes[i][j].type = nodeType.GOAL;
+                        break;
+                    case nodeType.WALL.code:
+                        this.nodes[i][j].type = nodeType.WALL;
+                        break;
+                    default:
+                        this.nodes[i][j].type = nodeType.EMPTY;
+                }
+            }
+        }
     }
 
     toggleNode(x, y) {
