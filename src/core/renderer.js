@@ -57,11 +57,11 @@ class Renderer {
     }
 }
 
-let canvas = document.getElementById("main-canvas");
-let renderer = new Renderer(canvas);
 let speedSlider = document.querySelector("#speedSlider");
+let canvas = document.getElementById("main-canvas");
+let renderer = new Renderer(canvas, size.value);
 setInterval(() => {
-    renderer.update(speedSlider.value);
+    renderer.update(speedSlider.value, size.value);
     renderer.draw();
 }, 0);
 

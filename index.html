@@ -4,16 +4,21 @@
 		<meta charset="utf-8">
 		<title>Pathfinding visualizer</title>
 	</head>
-	<body bgcolor="#282828">
+	<body bgcolor="#015366">
 		<div>
-        	<canvas id="main-canvas"/>
+        	<canvas id="main-canvas"></canvas>
 		</div>
 		<div>
 			<button type="button" id="run">Run</button>
-			<button type="button" id="clear">Clear</button>
-  			Speed:
-			<input id="speedSlider" type="range" min="1" max="100" value="1"/>
-		</form>
+			<button type="button" id="clear">Clear</button> Speed:
+			<input id="speedSlider" type="range" min="1" max="100" value="1"></input>
+			<select id='size'>
+			  <option value=16>Tiny (16x16)</option>
+			  <option value=32 selected="selected">Small (32x32)</option>
+			  <option value=64>Regular (64x64)</option>
+			  <option value=128>Large (128x128)</option>
+			  <option value=256>Huge (256x256)</option>
+			</select>
 
 		<script src="src/utils/helpers.js"></script>
 		<script src="src/data-structures/heap.js"></script>

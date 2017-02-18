@@ -24,6 +24,18 @@ class Input {
         }
     }
 
+    _onSizeChange(size) {
+        this.graph = new Graph(size);
+
+        // Set renderer to use the new graph
+        renderer.graph = this.graph;
+        renderer.mode = mode.EDIT;
+    }
+
+    _onSpeedChange() {
+        // TODO: move speed logic here
+    }
+
     _getMouseCoordinates(evt) {
         var rect = canvas.getBoundingClientRect();
         return {
@@ -52,6 +64,10 @@ class Input {
                 var coord = this._getMouseCoordinates(evt);
                 this._onUpdate(coord.x, coord.y);
             }
+        });
+
+        document.getElementById("size").addEventListener('change', (evt) => {
+            this._onSizeChange(evt.target.value);
         });
     }
 }
