@@ -19,6 +19,12 @@ var Heuristics = {
         return Math.sqrt(dx * dx + dy * dy);
     },
 
+    SQUARED_EUCLIDEAN: function(node, goal) {
+        var dx = Math.abs(node.x - goal.x);
+        var dy = Math.abs(node.y - goal.y);
+        return 10000 * (dx * dx + dy * dy);
+    },
+
     MANHATTAN: function(node, goal) {
         var dx = Math.abs(node.x - goal.x);
         var dy = Math.abs(node.y - goal.y);
@@ -30,21 +36,21 @@ const config = {
     DIJKSTRA: {
         algo: AStar,
         heuristic: Heuristics.DIJKSTRA,
-        diagonal: true
     },
     ASTAR_OCTILE: {
         algo: AStar,
         heuristic: Heuristics.OCTILE,
-        diagonal: true
     },
     ASTAR_EUCLIDEAN: {
         algo: AStar,
         heuristic: Heuristics.EUCLIDEAN,
-        diagonal: true
     },
     ASTAR_MANHATTAN: {
         algo: AStar,
         heuristic: Heuristics.MANHATTAN,
-        diagonal: false // Does not work with diagonals
+    },
+    BEST_FIRST: {
+        algo: AStar,
+        heuristic: Heuristics.SQUARED_EUCLIDEAN,
     }
 };
