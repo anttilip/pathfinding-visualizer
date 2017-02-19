@@ -85,8 +85,6 @@ class Heap {
         while (i > 0 && this.array[this.parent(i)].key > key) {
             // Parent has larger key so move parent down and start to check
             // its parents key.
-            // this.array[i] = this.array[this.parent(i)];
-            // i = this.parent(i);
             this._switch(i, this.parent(i));
             i = this.parent(i);
         }
@@ -113,7 +111,8 @@ class Heap {
             // If the smaller child node has smaller key than the moved node,
             // move the smaller child node up
             if (node.key > this.array[smallerIndex].key) {
-                this.array[i] = this.array[smallerIndex];
+                //this.array[i] = this.array[smallerIndex];
+                this._switch(i, smallerIndex);
                 // Set new index to be the smaller child nodes previous index
                 i = smallerIndex;
             } else {
@@ -123,7 +122,7 @@ class Heap {
             }
         }
         // Set node to its own place we just found
-        this.array[i] = node;
+        //this.array[i] = node;
     }
 
     /**
@@ -137,8 +136,8 @@ class Heap {
         //this.nodeIndexes[this.array[x].node] = this.nodeIndexes[this.array[y].node];
         this.array[y] = tmp;
         //this.nodeIndexes[this.array[y].node] = this.nodeIndexes[this.array[tmp].node];
-        this.nodeIndexes[this.array[x].node.hashCode()] = y;
-        this.nodeIndexes[this.array[y].node.hashCode()] = x;
+        this.nodeIndexes[this.array[x].node.hashCode()] = x;
+        this.nodeIndexes[this.array[y].node.hashCode()] = y;
     }
 
     // When array is full, double its length and copy contents from old

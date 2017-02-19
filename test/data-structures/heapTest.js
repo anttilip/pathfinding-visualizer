@@ -39,7 +39,7 @@ describe('Heap', function() {
 
         let nodesOut = []
         while (heap.size !== 0) {
-            nodesOut.push(heap.pop().node);
+            nodesOut.push(heap.pop());
         }
         expect(nodesOut).to.have.members(nodesIn);
     });
@@ -59,7 +59,7 @@ describe('Heap', function() {
 
         let nodesOut = []
         while (heap.size !== 0) {
-            nodesOut.push(heap.pop().node);
+            nodesOut.push(heap.pop());
         }
         expect(nodesIn).to.deep.equal(nodesOut);
     });
@@ -74,8 +74,42 @@ describe('Heap', function() {
 
         let nodesOut = []
         while (heap.size !== 0) {
-            nodesOut.push(heap.pop().node);
+            nodesOut.push(heap.pop());
         }
         expect(nodesIn.reverse()).to.deep.equal(nodesOut);
+    });
+
+    it('updates keys correctly', function() {
+        let heap = new Heap();
+        for (let i = 1; i <= 231; i++) {
+            if (i % 5 == 0) {
+                let cur = heap.array[Math.floor(i / 2)]
+                let m;
+                if (cur.key % 2 == 0) {
+                    m = -cur.node.x;
+                } else {
+                    m = +15;
+                }
+                heap.updateKey(cur.key * m, cur.node)
+            }
+            if (i % 3 == 0) {
+                heap.pop();
+            }
+            heap.push(i, new Node(i, 600 - i));
+            heap.push(600 - i, new Node(600 - i, i))
+        }
+
+        // Huono tapa mut teinpä näin
+        for (let i = 0; i < heap.size; i++) {
+            let v = heap.array[i];
+            let n = v.node;
+            let c = n.hashCode();
+            let success = heap.nodeIndexes[c] === i;
+            if (!success) {
+                expect(success).to.be.true;
+                break;
+            }
+        }
+        expect(true).to.be.true;
     });
 });

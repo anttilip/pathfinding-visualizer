@@ -31,7 +31,7 @@ class AStar {
         start.fScore = 0;
 
         // Push start node to heap
-        openSet.push(start.gScore, start);
+        openSet.push(start.fScore, start);
         start.opened = true;
         openedList.push(start);
 
@@ -74,6 +74,8 @@ class AStar {
                         openSet.push(neighbour.fScore, neighbour);
                         neighbour.opened = true;
                         openedList.push(neighbour);
+                    } else {
+                        openSet.updateKey(neighbour.fScore, neighbour);
                     }
                 }
             }

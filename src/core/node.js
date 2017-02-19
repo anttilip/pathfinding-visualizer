@@ -49,12 +49,11 @@ class Node {
     }
 
     hashCode() {
-        const prime = 31;
-        var hash = 1;
-        hash = prime * hash + this.x;
-        hash = prime * hash + this.y;
+        const prime = 857;
+        var hash = 359;
+        hash = prime * (hash << 5) + this.x;
+        hash = prime * (hash << 5) + this.y;
         return prime * hash + this.type.code.charCodeAt(0);
-
     }
 
     /**

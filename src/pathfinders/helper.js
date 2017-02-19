@@ -1,5 +1,5 @@
 // Constants
-const SQRT2 = 1.414;
+const SQRT2 = Math.sqrt(2);
 
 // Heuristics
 var dijkstra = function(node, goal) {
