@@ -67,7 +67,7 @@ describe('Heap', function() {
     it('returns nodes in order (passed reversed)', function() {
         let heap = new Heap();
         let nodesIn = []
-        for (let i = 21; i > 0; i--) {
+        for (let i = 412; i > 0; i--) {
             heap.push(i, new Node(i, i));
             nodesIn.push(new Node(i, i));
         }

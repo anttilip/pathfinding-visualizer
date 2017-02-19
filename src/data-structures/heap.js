@@ -9,7 +9,7 @@ class Heap {
         this.size = 0;
 
         // Functions to find nodes parent and childs given its index
-        this.parent = (i) => Math.floor(i / 2);
+        this.parent = (i) => Math.floor((i - 1) / 2);
         this.left = (i) => (2 * i + 1);
         this.right = (i) => (2 * i + 2);
     }
