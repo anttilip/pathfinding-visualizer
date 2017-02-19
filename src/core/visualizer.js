@@ -11,6 +11,7 @@ class Visualizer {
         this.path = result.path;
         this.currentNode = graph.goalNode;
         this.visualizationComplete = false;
+        this.hslToStr = h => 'hsl(' + h + ', 50%, 50%)';
     }
 
     /**
@@ -36,7 +37,7 @@ class Visualizer {
     _visualizeSeen(context, speed) {
         for (var i = 0; i < speed && this.openedList.length !== 0; i++) {
             var node = this.openedList.pop();
-            var color = hslToStr(this._distanceToHSL(node.gScore), 50, 50);
+            var color = this.hslToStr(this._distanceToHSL(node.gScore), 50, 50);
             node.draw(context, this.graph.nodeSize, color);
         }
     }
