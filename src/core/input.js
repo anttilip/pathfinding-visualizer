@@ -29,8 +29,10 @@ class Input {
             }
             // toggle node type, e.g. EMPTY -> WALL
             this.graph.toggleNode(x, y);
+            // Draw changed node
+            this.graph.nodes[x][y].draw(canvas.getContext('2d'), this.graph.nodeSize);
         } else {
-            renderer.mode = mode.EDIT;
+            renderer.changeMode(mode.EDIT);
         }
     }
 
@@ -39,7 +41,7 @@ class Input {
 
         // Set renderer to use the new graph
         renderer.graph = this.graph;
-        renderer.mode = mode.EDIT;
+        renderer.changeMode(mode.EDIT);
     }
 
     _onSpeedChange() {

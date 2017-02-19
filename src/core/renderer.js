@@ -14,7 +14,8 @@ class Renderer {
         this.graph = new Graph(32);
         this.input = new Input(canvas, this.graph);
         this.visualizer = undefined;
-        this.mode = mode.EDIT;
+        this.mode = undefined;
+        this.changeMode(mode.EDIT);
     }
 
     update(speed) {
@@ -24,16 +25,6 @@ class Renderer {
             var adjustedSpeed = Math.exp(multplier * speed) - 1;
             // Advance visualization
             this.visualizer.tick(this.canvas, adjustedSpeed);
-
-            if (this.visualizer.visualizationComplete) {
-                this.mode = mode.IDLE;
-            }
-        }
-    }
-
-    draw() {
-        if (this.mode == mode.EDIT) {
-            this.graph.draw(this.canvas);
         }
     }
 
@@ -55,12 +46,17 @@ class Renderer {
         console.log('Took: ' + Math.round(deltaTime) + ' ms.');
 
         this.visualizer = new Visualizer(result, this.graph);
-        this.mode = mode.VISUALIZE;
+        this.changeMode(mode.VISUALIZE);
     }
 
     clearGraph() {
         this.graph.clearGraph();
-        this.mode = mode.EDIT;
+        this.changeMode(mode.EDIT);
+    }
+
+    changeMode(mode) {
+        this.mode = mode;
+        this.graph.draw(this.canvas);
     }
 }
 
@@ -69,7 +65,6 @@ let canvas = document.getElementById("main-canvas");
 let renderer = new Renderer(canvas, size.value);
 setInterval(() => {
     renderer.update(speedSlider.value, size.value);
-    renderer.draw();
 }, 0);
 
 // Set buttons to run functions
