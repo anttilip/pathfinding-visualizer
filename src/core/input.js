@@ -20,11 +20,13 @@ class Input {
                 // If user is dragging start node, move it with mouse
                 this.graph.startNode.type = nodeType.EMPTY;
                 this.graph.nodes[x][y].type = nodeType.START;
+                this.graph.startNode.draw(canvas.getContext('2d'), this.graph.nodeSize);
                 this.graph.startNode = this.graph.nodes[x][y];
             } else if (this.draggedNode === nodeType.GOAL) {
                 // If user is dragging goal node, move it with mouse
                 this.graph.goalNode.type = nodeType.EMPTY;
                 this.graph.nodes[x][y].type = nodeType.GOAL;
+                this.graph.goalNode.draw(canvas.getContext('2d'), this.graph.nodeSize);
                 this.graph.goalNode = this.graph.nodes[x][y];
             }
             // toggle node type, e.g. EMPTY -> WALL
