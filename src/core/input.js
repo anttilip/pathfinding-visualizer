@@ -51,7 +51,7 @@ class Input {
     }
 
     _getMouseCoordinates(evt) {
-        var rect = canvas.getBoundingClientRect();
+        let rect = canvas.getBoundingClientRect();
         return {
             x: evt.clientX - rect.left,
             y: evt.clientY - rect.top
@@ -69,7 +69,7 @@ class Input {
     _createListeners(canvas) {
         canvas.addEventListener('mousedown', (evt) => {
             this.isDragging = true;
-            var coord = this._mouseCoordinatesToGrid(this._getMouseCoordinates(evt));
+            let coord = this._mouseCoordinatesToGrid(this._getMouseCoordinates(evt));
             if (this.graph.nodes[coord.x][coord.y] === this.graph.startNode ||
                 this.graph.nodes[coord.x][coord.y] === this.graph.goalNode) {
                 this.draggedNode = this.graph.nodes[coord.x][coord.y].type;
@@ -87,7 +87,7 @@ class Input {
         canvas.addEventListener('mousemove', (evt) => {
             if (this.isDragging) {
                 // alert('mousemove');
-                var coord = this._mouseCoordinatesToGrid(this._getMouseCoordinates(evt));
+                let coord = this._mouseCoordinatesToGrid(this._getMouseCoordinates(evt));
                 this._onMouseInput(coord.x, coord.y);
             }
         });

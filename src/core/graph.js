@@ -27,8 +27,8 @@ class Graph {
     }
 
     _setTypes(matrix) {
-        for (var i = 0; i < matrix.length; i++) {
-            for (var j = 0; j < matrix.length; j++) {
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix.length; j++) {
                 switch (matrix[i][j]) {
                     case nodeType.START.code:
                         this.nodes[i][j].type = nodeType.START;
@@ -47,7 +47,7 @@ class Graph {
     }
 
     toggleNode(x, y) {
-        var node = this.nodes[x][y];
+        let node = this.nodes[x][y];
         // Determine which color to draw
         if (!this.currentlyDrawing) {
             if (node.type == nodeType.EMPTY) {
@@ -64,10 +64,10 @@ class Graph {
     }
 
     draw(canvas) {
-        var context = canvas.getContext("2d");
-        for (var i = 0; i < this.nodes.length; i++) {
-            for (var j = 0; j < this.nodes[i].length; j++) {
-                var node = this.nodes[i][j];
+        let context = canvas.getContext("2d");
+        for (let i = 0; i < this.nodes.length; i++) {
+            for (let j = 0; j < this.nodes[i].length; j++) {
+                let node = this.nodes[i][j];
                 // Draw nodes in grid in their types color
                 node.draw(context, this.nodeSize);
             }
@@ -76,10 +76,10 @@ class Graph {
 
     _createGraph() {
         // 2D node array
-        var nodes = new Array(this.size);
-        for (var i = 0; i < this.size; i++) {
+        let nodes = new Array(this.size);
+        for (let i = 0; i < this.size; i++) {
             nodes[i] = new Array(this.size);
-            for (var j = 0; j < this.size; j++) {
+            for (let j = 0; j < this.size; j++) {
                 nodes[i][j] = new Node(i, j);
             }
         }
@@ -94,10 +94,10 @@ class Graph {
     }
 
     getNodesNeighbours(node) {
-        var neighbours = [];
-        var left, right, top, bottom;
-        var x = node.x;
-        var y = node.y;
+        let neighbours = [];
+        let left, right, top, bottom;
+        let x = node.x;
+        let y = node.y;
         // Left
         if (this._isEmpty(x - 1, y)) {
             neighbours.push(this.nodes[x - 1][y]);
@@ -141,12 +141,12 @@ class Graph {
         if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1) {
             return false;
         }
-        var type = this.nodes[x][y].type;
+        let type = this.nodes[x][y].type;
         return type == nodeType.EMPTY || type == nodeType.GOAL;
     }
 
     _outOfBounds(x, y) {
-        var limit = this.size * this.nodeSize - 1;
+        let limit = this.size * this.nodeSize - 1;
         return x < 0 || x > limit || y < 0 || y > limit;
     }
 
@@ -163,8 +163,8 @@ class Graph {
     }
 
     resetNodes() {
-        for (var i = 0; i < this.size; i++) {
-            for (var j = 0; j < this.size; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
                 this.nodes[i][j].reset();
             }
         }

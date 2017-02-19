@@ -20,7 +20,7 @@ class Visualizer {
      * @param {number} speed - Multiplier how many nodes are revealed in a tick.
      */
     tick(canvas, speed) {
-        var context = canvas.getContext("2d");
+        let context = canvas.getContext("2d");
 
         if (this.openedList.length !== 0) {
             this._visualizeSeen(context, speed);
@@ -35,9 +35,9 @@ class Visualizer {
      * @param {number} speed - Multiplier how many nodes are revealed in a tick.
      */
     _visualizeSeen(context, speed) {
-        for (var i = 0; i < speed && this.openedList.length !== 0; i++) {
-            var node = this.openedList.pop();
-            var color = this.hslToStr(this._distanceToHSL(node.gScore), 50, 50);
+        for (let i = 0; i < speed && this.openedList.length !== 0; i++) {
+            let node = this.openedList.pop();
+            let color = this.hslToStr(this._distanceToHSL(node.gScore), 50, 50);
             node.draw(context, this.graph.nodeSize, color);
         }
     }
@@ -55,8 +55,8 @@ class Visualizer {
             return;
         }
 
-        var node = this.currentNode;
-        var parent = this.currentNode.parent;
+        let node = this.currentNode;
+        let parent = this.currentNode.parent;
 
         context.beginPath();
         context.moveTo(this.graph.graphToScreen(node.x + 0.5),
@@ -68,10 +68,10 @@ class Visualizer {
     }
 
     _distanceToHSL(distance) {
-        var min = 133;
-        var max = 360 - 133;
-        var end = this.graph.goalNode;
-        var maxDist = this.graph.goalNode.gScore;
+        let min = 133;
+        let max = 360 - 133;
+        let end = this.graph.goalNode;
+        let maxDist = this.graph.goalNode.gScore;
         return min + distance * max / maxDist;
     }
 }

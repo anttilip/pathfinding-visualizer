@@ -1,4 +1,4 @@
-var nodeType = {
+let nodeType = {
     EMPTY: {
         code: 'E',
         color: '#303030'
@@ -50,7 +50,7 @@ class Node {
 
     hashCode() {
         const prime = 857;
-        var hash = 359;
+        let hash = 359;
         hash = prime * (hash << 5) + this.x;
         hash = prime * (hash << 5) + this.y;
         return prime * hash + this.type.code.charCodeAt(0);

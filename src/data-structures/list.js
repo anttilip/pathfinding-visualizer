@@ -17,15 +17,15 @@ class List {
     }
 
     fill(value) {
-        for (var i = 0; i < this.array.length; i++) {
+        for (let i = 0; i < this.array.length; i++) {
             this.array[i] = value;
         }
         this.size = this.array.length;
     }
 
     _expandArray() {
-        var newArray = new Array(this.array * 2);
-        for (var i = 0; i < this.array.length; i++) {
+        let newArray = new Array(this.array * 2);
+        for (let i = 0; i < this.array.length; i++) {
             newArray[i] = this.array[i];
         }
         this.array = newArray;

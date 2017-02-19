@@ -1,4 +1,4 @@
-var mode = {
+let mode = {
     EDIT: 0,
     VISUALIZE: 1,
     IDLE: 2
@@ -21,8 +21,8 @@ class Renderer {
     update(speed) {
         if (this.mode == mode.VISUALIZE) {
             // Convert speed slider to logarithmic
-            var multplier = Math.log(this.graph.size) / 100;
-            var adjustedSpeed = Math.exp(multplier * speed) - 1;
+            let multplier = Math.log(this.graph.size) / 100;
+            let adjustedSpeed = Math.exp(multplier * speed) - 1;
             // Advance visualization
             this.visualizer.tick(this.canvas, adjustedSpeed);
         }
@@ -34,14 +34,14 @@ class Renderer {
         // Draw over old search before new search
         this.graph.draw(this.canvas);
         // Get selected settings
-        var conf = config[document.getElementById("algo").value];
+        let conf = config[document.getElementById("algo").value];
         // Create selected pathfinder and use selected heuristic
-        var pathfinder = new conf.algo(this.graph, conf.heuristic);
+        let pathfinder = new conf.algo(this.graph, conf.heuristic);
 
         // Time how long does it take to find a path
-        var t0 = performance.now();
-        var result = pathfinder.findShortestPath();
-        var deltaTime = performance.now() - t0;
+        let t0 = performance.now();
+        let result = pathfinder.findShortestPath();
+        let deltaTime = performance.now() - t0;
 
         console.log('Took: ' + Math.round(deltaTime) + ' ms.');
 

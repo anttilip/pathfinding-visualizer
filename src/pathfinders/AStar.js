@@ -8,7 +8,7 @@ class AStar {
     constructor(graph, heuristic) {
         this.graph = graph;
         // P is estimated max distance for breaking ties
-        var p = graph.size;
+        let p = graph.size;
         this.heuristic = (node, goal) => (heuristic(node, goal) * (1 + 1 / p));
     }
 
@@ -18,12 +18,12 @@ class AStar {
      */
     findShortestPath() {
         // Nodes that have been seen but not processed yet.
-        var openSet = new Heap();
+        let openSet = new Heap();
         // Ordered list of nodes which have been seen.
-        var openedList = [];
+        let openedList = [];
 
-        var start = this.graph.startNode;
-        var goal = this.graph.goalNode;
+        let start = this.graph.startNode;
+        let goal = this.graph.goalNode;
 
         // gScore is nodes distance from start node.
         start.gScore = 0;
@@ -37,7 +37,7 @@ class AStar {
 
         // Main loop
         while (openSet.size !== 0) {
-            var node = openSet.pop();
+            let node = openSet.pop();
             node.closed = true;
 
             // Goal node was found
@@ -50,9 +50,9 @@ class AStar {
             }
 
             // Get nodes neighbours
-            var neighbours = this.graph.getNodesNeighbours(node);
-            for (var i = 0; i < neighbours.length; i++) {
-                var neighbour = neighbours[i];
+            let neighbours = this.graph.getNodesNeighbours(node);
+            for (let i = 0; i < neighbours.length; i++) {
+                let neighbour = neighbours[i];
 
                 // If neighbour is already processed move to next neigbour
                 if (neighbour.closed) {
@@ -60,7 +60,7 @@ class AStar {
                 }
 
                 // Get neighours distance from current node
-                var dist = this._getDistance(node, neighbour);
+                let dist = this._getDistance(node, neighbour);
 
                 if (!neighbour.opened || dist < neighbour.gScore) {
                     neighbour.gScore = dist; // Distance from start
@@ -88,12 +88,12 @@ class AStar {
     }
 
     _getDistance(node, next) {
-        var weight = node.x == next.x || node.y == next.y ? 1 : 1.414;
+        let weight = node.x == next.x || node.y == next.y ? 1 : 1.414;
         return node.gScore + weight;
     }
 
     _backtrack(node) {
-        var path = [];
+        let path = [];
         while (node !== undefined) {
             path.push(node);
             node = node.parent;

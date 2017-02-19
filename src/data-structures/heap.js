@@ -50,10 +50,10 @@ class Heap {
             return undefined;
         }
         // Pick the top (smallest) node
-        var top = this.array[0];
+        let top = this.array[0];
 
         // Take the last node in heap and move it to the top and decrease size
-        var node = this.array[this.size - 1];
+        let node = this.array[this.size - 1];
         this.array[0] = node;
         this.size--;
 
@@ -66,8 +66,8 @@ class Heap {
     }
 
     updateKey(key, node) {
-        var i = this.nodeIndexes[node.hashCode()];
-        var oldKey = this.array[i].key;
+        let i = this.nodeIndexes[node.hashCode()];
+        let oldKey = this.array[i].key;
         this.array[i].key = key;
         if (oldKey > key) {
             // decrease key
@@ -81,7 +81,7 @@ class Heap {
     _bubbleUp(i) {
         // Starting from bottom go up parent chains until parent has smaller
         // key or end up in top
-        var key = this.array[i].key;
+        let key = this.array[i].key;
         while (i > 0 && this.array[this.parent(i)].key > key) {
             // Parent has larger key so move parent down and start to check
             // its parents key.
@@ -94,14 +94,14 @@ class Heap {
         // Move the new top node to its own place
         // Starting from top node, check that both children are smaller than
         // current node. If not, switch them and repeat.
-        var node = this.array[i];
+        let node = this.array[i];
         while (this.left(i) < this.size) {
             // Calculate children's indexes
-            var leftIndex = this.left(i);
-            var rightIndex = this.right(i);
+            let leftIndex = this.left(i);
+            let rightIndex = this.right(i);
 
             // Choose smaller child node
-            var smallerIndex;
+            let smallerIndex;
             if (rightIndex < this.size && this.array[rightIndex].key < this.array[leftIndex].key) {
                 smallerIndex = rightIndex;
             } else {
@@ -131,7 +131,7 @@ class Heap {
      * @param {number} y - Second index.
      */
     _switch(x, y) {
-        var tmp = this.array[x];
+        let tmp = this.array[x];
         this.array[x] = this.array[y];
         //this.nodeIndexes[this.array[x].node] = this.nodeIndexes[this.array[y].node];
         this.array[y] = tmp;
@@ -143,8 +143,8 @@ class Heap {
     // When array is full, double its length and copy contents from old
     // array to the new, larger one
     _expandArray() {
-        var newArray = new Array(this.array.length * 2);
-        for (var i = 0; i < this.array.length; i++) {
+        let newArray = new Array(this.array.length * 2);
+        for (let i = 0; i < this.array.length; i++) {
             newArray[i] = this.array[i];
         }
         this.array = newArray;
