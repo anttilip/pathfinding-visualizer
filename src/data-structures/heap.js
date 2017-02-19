@@ -25,47 +25,60 @@ class Heap {
         if (this.size > this.array.length) {
             this._expandArray(this.array);
         }
-        // Starting from bottom go up parent chains until parent has smaller
-        // key or end up in top
-        var i = this.size - 1;
-        while (i > 0 && this.array[this.parent(i)].key > key) {
-            // Parent has larger key so move parent down and start to check
-            // its parents key.
-            this.array[i] = this.array[this.parent(i)];
-            i = this.parent(i);
-        }
 
-        // Set new node to the position we just searched
-        this.array[i] = {
+        // Set new node to the last in array
+        this.array[this.size - 1] = {
             key: key,
             node: node
         };
+
+        // Move the new node up to its correct place
+        this._bubbleUp(this.size - 1);
     }
 
     /**
      * Remove and return node with smallest key.
      * @return {Array<key: number, node: Node>} Key and node.
      */
-
     pop() {
         // If heap is empty, there is nothing to pop
         if (this.size === 0) {
             return undefined;
         }
-        // Pick the top value
+        // Pick the top (smallest) node
         var top = this.array[0];
 
-        // Save bottom value and set it to the new top
-        var movingNode = this.array[this.size - 1];
-        this.array[0] = movingNode;
-
-        // Decrease heap size by one
+        // Take the last node in heap and move it to the top and decrease size
+        var node = this.array[this.size - 1];
+        this.array[0] = node;
         this.size--;
 
+        // Move the new top node down to its correct place
+        this._bubbleDown(0);
+
+        // Return the original top value
+        return top;
+    }
+
+    _bubbleUp(i) {
+        // Starting from bottom go up parent chains until parent has smaller
+        // key or end up in top
+        var key = this.array[i].key;
+        while (i > 0 && this.array[this.parent(i)].key > key) {
+            // Parent has larger key so move parent down and start to check
+            // its parents key.
+            // this.array[i] = this.array[this.parent(i)];
+            // i = this.parent(i);
+            this._switch(i, this.parent(i));
+            i = this.parent(i);
+        }
+    }
+
+    _bubbleDown(i) {
         // Move the new top node to its own place
         // Starting from top node, check that both children are smaller than
         // current node. If not, switch them and repeat.
-        var i = 0;
+        var node = this.array[i];
         while (this.left(i) < this.size) {
             // Calculate children's indexes
             var leftIndex = this.left(i);
@@ -81,7 +94,7 @@ class Heap {
 
             // If the smaller child node has smaller key than the moved node,
             // move the smaller child node up
-            if (movingNode.key > this.array[smallerIndex].key) {
+            if (node.key > this.array[smallerIndex].key) {
                 this.array[i] = this.array[smallerIndex];
                 // Set new index to be the smaller child nodes previous index
                 i = smallerIndex;
@@ -92,10 +105,18 @@ class Heap {
             }
         }
         // Set node to its own place we just found
-        this.array[i] = movingNode;
+        this.array[i] = node;
+    }
 
-        // Return the original top value
-        return top;
+    /**
+     * Switch nodes from given indexes.
+     * @param {number} x - First index.
+     * @param {number} y - Second index.
+     */
+    _switch(x, y) {
+        var tmp = this.array[x];
+        this.array[x] = this.array[y];
+        this.array[y] = tmp;
     }
 
     // When array is full, double its length and copy contents from old
