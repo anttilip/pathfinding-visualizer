@@ -49,6 +49,9 @@ class Visualizer {
     _visualizePath(context) {
         if (this.currentNode.parent === undefined) {
             this.visualizationComplete = true;
+            // Highlight start and goal nodes
+            this.graph.startNode.draw(context, this.graph.nodeSize, '#339949');
+            this.graph.goalNode.draw(context, this.graph.nodeSize, '#933');
             return;
         }
 
