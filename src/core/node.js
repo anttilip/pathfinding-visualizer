@@ -28,6 +28,24 @@ class Node {
         this.x = x;
         this.y = y;
         this.type = nodeType.EMPTY;
+
+        this.parent = undefined;
+
+        this.opened = false;
+        this.closed = false;
+
+        this.gScore = Infinity;
+        this.fScore = Infinity;
+    }
+
+    reset() {
+        this.parent = undefined;
+
+        this.opened = false;
+        this.closed = false;
+
+        this.gScore = Infinity;
+        this.fScore = Infinity;
     }
 
     hashCode() {

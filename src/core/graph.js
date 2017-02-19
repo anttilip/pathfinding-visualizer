@@ -161,4 +161,12 @@ class Graph {
     clearGraph() {
         this.nodes = this._createGraph();
     }
+
+    resetNodes() {
+        for (var i = 0; i < this.size; i++) {
+            for (var j = 0; j < this.size; j++) {
+                this.nodes[i][j].reset();
+            }
+        }
+    }
 }

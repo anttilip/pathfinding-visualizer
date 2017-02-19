@@ -19,10 +19,16 @@
 			  <option value=128>Large (128x128)</option>
 			  <option value=256>Huge (256x256)</option>
 			</select>
+			<select id='algo'>
+			  <option value=DIJKSTRA selected="selected">Dijkstra</option>
+			  <option value=ASTAR_OCTILE>A* (octile distance)</option>
+			  <option value=ASTAR_EUCLIDEAN>A* (euclidean distance)</option>
+			</select>
 
 		<script src="src/utils/helpers.js"></script>
 		<script src="src/data-structures/heap.js"></script>
-		<script src="src/pathfinders/dijkstra.js"></script>
+		<script src="src/pathfinders/AStar.js"></script>
+		<script src="src/pathfinders/helper.js"></script>
 		<script src="src/core/input.js"></script>
 		<script src="src/core/node.js"></script>
 		<script src="src/core/graph.js"></script>

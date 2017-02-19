@@ -25,7 +25,7 @@ class Renderer {
             // Advance visualization
             this.visualizer.tick(this.canvas, adjustedSpeed);
 
-            if (this.visualizer.visualizationComplete()) {
+            if (this.visualizer.visualizationComplete) {
                 this.mode = mode.IDLE;
             }
         }
@@ -38,14 +38,21 @@ class Renderer {
     }
 
     run() {
+        // Reset nodes from previous search
+        this.graph.resetNodes();
         // Draw over old search before new search
         this.graph.draw(this.canvas);
-        var dijkstra = new Dijkstra();
+        // Get selected settings
+        var conf = config[document.getElementById("algo").value];
+        // Create selected pathfinder and use selected heuristic
+        var pathfinder = new conf.algo(this.graph, conf.heuristic);
+
+        // Time how long does it take to find a path
         var t0 = performance.now();
-        var result = dijkstra.findShortestPath(this.graph);
+        var result = pathfinder.findShortestPath();
         var deltaTime = performance.now() - t0;
 
-        alert('Took: ' + Math.round(deltaTime) + ' ms.');
+        console.log('Took: ' + Math.round(deltaTime) + ' ms.');
 
         this.visualizer = new Visualizer(result, this.graph);
         this.mode = mode.VISUALIZE;

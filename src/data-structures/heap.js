@@ -8,6 +8,8 @@ class Heap {
         this.array = new Array(size);
         this.size = 0;
 
+        this.nodeIndexes = {};
+
         // Functions to find nodes parent and childs given its index
         this.parent = (i) => Math.floor((i - 1) / 2);
         this.left = (i) => (2 * i + 1);
@@ -31,6 +33,8 @@ class Heap {
             key: key,
             node: node
         };
+
+        this.nodeIndexes[node.hashCode()] = this.size - 1;
 
         // Move the new node up to its correct place
         this._bubbleUp(this.size - 1);
@@ -57,7 +61,21 @@ class Heap {
         this._bubbleDown(0);
 
         // Return the original top value
-        return top;
+        delete this.nodeIndexes[top.node.hashCode()];
+        return top.node;
+    }
+
+    updateKey(key, node) {
+        var i = this.nodeIndexes[node.hashCode()];
+        var oldKey = this.array[i].key;
+        this.array[i].key = key;
+        if (oldKey > key) {
+            // decrease key
+            this._bubbleUp(i);
+        } else {
+            // increase key
+            this._bubbleDown(i);
+        }
     }
 
     _bubbleUp(i) {
@@ -116,7 +134,11 @@ class Heap {
     _switch(x, y) {
         var tmp = this.array[x];
         this.array[x] = this.array[y];
+        //this.nodeIndexes[this.array[x].node] = this.nodeIndexes[this.array[y].node];
         this.array[y] = tmp;
+        //this.nodeIndexes[this.array[y].node] = this.nodeIndexes[this.array[tmp].node];
+        this.nodeIndexes[this.array[x].node.hashCode()] = y;
+        this.nodeIndexes[this.array[y].node.hashCode()] = x;
     }
 
     // When array is full, double its length and copy contents from old
