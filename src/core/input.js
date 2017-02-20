@@ -1,4 +1,4 @@
-/** Class handilng input. */
+/** Class handling user input. */
 class Input {
     /**
      * Create Input.
@@ -17,7 +17,7 @@ class Input {
     _onMouseInput(x, y) {
         if (renderer.mode == mode.EDIT) {
             if (this.draggedNode === nodeType.START) {
-                // If user is dragging start node, move it with mouse
+                // If user is dragging the start node, move it with mouse
                 this.graph.startNode.type = nodeType.EMPTY;
                 this.graph.nodes[x][y].type = nodeType.START;
                 this.graph.startNode.draw(canvas.getContext('2d'), this.graph.nodeSize);
@@ -86,7 +86,6 @@ class Input {
 
         canvas.addEventListener('mousemove', (evt) => {
             if (this.isDragging) {
-                // alert('mousemove');
                 let coord = this._mouseCoordinatesToGrid(this._getMouseCoordinates(evt));
                 this._onMouseInput(coord.x, coord.y);
             }

@@ -21,8 +21,8 @@ class Renderer {
     update(speed) {
         if (this.mode == mode.VISUALIZE) {
             // Convert speed slider to logarithmic
-            let multplier = Math.log(this.graph.size) / 100;
-            let adjustedSpeed = Math.exp(multplier * speed) - 1;
+            let multiplier = Math.log(this.graph.size) / 100;
+            let adjustedSpeed = Math.exp(multiplier * speed) - 1;
             // Advance visualization
             this.visualizer.tick(this.canvas, adjustedSpeed);
         }
