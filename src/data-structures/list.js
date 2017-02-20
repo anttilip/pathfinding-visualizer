@@ -1,15 +1,23 @@
 class List {
-    constructor(size = 32) {
-        this.array = new Array(size);
-        this.size = 0;
+    constructor(initialSize = 32) {
+        if (initialSize !== parseInt(initialSize) || initialSize <= 0) {
+            throw Error("Size must be positive integer")
+        }
+        this.array = new Array(initialSize);
+        this.length = 0;
     }
 
-    add(value) {
-        if (this.size == this.array.length) {
+    push(value) {
+        if (this.length == this.array.length) {
             this._expandArray();
         }
-        this.array[this.size] = value;
-        this.size++;
+        this.array[this.length] = value;
+        this.length++;
+    }
+
+    pop() {
+        this.length--;
+        return this.array[this.length];
     }
 
     get(i) {
@@ -20,11 +28,11 @@ class List {
         for (let i = 0; i < this.array.length; i++) {
             this.array[i] = value;
         }
-        this.size = this.array.length;
+        this.length = this.array.length;
     }
 
     _expandArray() {
-        let newArray = new Array(this.array * 2);
+        let newArray = new Array(this.array.length * 2);
         for (let i = 0; i < this.array.length; i++) {
             newArray[i] = this.array[i];
         }
