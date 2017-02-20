@@ -25,31 +25,35 @@ describe('List', function() {
         expect(list.length).to.equal(numbers.length);
     });
 
-    it('should have given numbers', function() {
-        let list = new List();
-        numbers.forEach(x => list.push(x));
-        expect(list.array).to.eql(numbers);
+    describe('push', function() {
+        it('should have given numbers', function() {
+            let list = new List();
+            numbers.forEach(x => list.push(x));
+            expect(list.array).to.eql(numbers);
+        });
+
+        it('should have given words', function() {
+            let list = new List();
+            words.forEach(x => list.push(x));
+            expect(list.array).to.eql(words);
+        });
     });
 
-    it('should have given words', function() {
-        let list = new List();
-        words.forEach(x => list.push(x));
-        expect(list.array).to.eql(words);
-    });
+    describe('pop', function() {
+        it('should pop undefined if no values', function() {
+            let list = new List();
+            expect(list.pop()).to.be.undefined;
+        });
 
-    it('should pop undefined if no values', function() {
-        let list = new List();
-        expect(list.pop()).to.be.undefined;
-    });
-
-    it('should pop all values', function() {
-        let list = new List();
-        sample.forEach(x => list.push(x));
-        let output = []
-        while (list.length !== 0) {
-            output.push(list.pop());
-        }
-        expect(output.reverse()).to.eql(sample);
+        it('should pop all values', function() {
+            let list = new List();
+            sample.forEach(x => list.push(x));
+            let output = []
+            while (list.length !== 0) {
+                output.push(list.pop());
+            }
+            expect(output.reverse()).to.eql(sample);
+        });
     });
 
     it('should fill values correctly', function() {
@@ -62,5 +66,40 @@ describe('List', function() {
         let list = new List();
         sample.forEach(x => list.push(x));
         expect(list.get(14)).to.equal(sample[14]);
+    });
+
+
+    it('should swap correctly', function() {
+        let list = new List();
+        sample.forEach(x => list.push(x));
+        list.swap(13, 85);
+        expect(list.get(13)).to.equal(sample[85]);
+        expect(list.get(85)).to.equal(sample[13]);
+    });
+
+    describe('reverse', function() {
+        it('should reverse [1, 2, 3]', function() {
+            let list = new List(3);
+            let arr = [1, 2, 3];
+            arr.forEach(x => list.push(x));
+            list.reverse();
+            expect(list.array).to.eql(arr.reverse());
+        });
+
+        it('should reverse sample', function() {
+            let list = new List();
+            let arr = sample;
+            arr.forEach(x => list.push(x));
+            list.reverse();
+            expect(list.array).to.eql(arr.reverse());
+        });
+
+        it('should reverse []', function() {
+            let list = new List();
+            let arr = [];
+            arr.forEach(x => list.push(x));
+            list.reverse();
+            expect(list.array).to.eql(arr.reverse());
+        });
     });
 });

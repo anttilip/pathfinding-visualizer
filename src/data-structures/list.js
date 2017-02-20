@@ -24,11 +24,29 @@ class List {
         return this.array[i];
     }
 
+    set(i, element) {
+        this.array[i] = element;
+    }
+
     fill(value) {
         for (let i = 0; i < this.array.length; i++) {
             this.array[i] = value;
         }
         this.length = this.array.length;
+    }
+
+    swap(a, b) {
+        let tmp = this.array[a];
+        this.array[a] = this.array[b];
+        this.array[b] = tmp;
+    }
+
+    reverse() {
+        let reversed = new Array(this.array.length);
+        for (let i = 0; i < this.length; i++) {
+            reversed[i] = this.array[this.length - 1 - i];
+        }
+        this.array = reversed;
     }
 
     _expandArray() {
