@@ -94,7 +94,7 @@ class Graph {
     }
 
     getNodesNeighbours(node) {
-        let neighbours = [];
+        let neighbours = new List();
         let left, right, top, bottom;
         let x = node.x;
         let y = node.y;

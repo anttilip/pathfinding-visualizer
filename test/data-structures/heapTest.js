@@ -8,11 +8,6 @@ describe('Heap', function() {
         assert.equal(heap.size, 0);
     });
 
-    it('array size initializer sets size correctly', function() {
-        let heap = new Heap(11);
-        assert.equal(heap.array.length, 11);
-    })
-
     it('size increases when adding a node', function() {
         let heap = new Heap();
         heap.push(5, new Node(0, 1));
@@ -79,11 +74,19 @@ describe('Heap', function() {
         expect(nodesIn.reverse()).to.deep.equal(nodesOut);
     });
 
-    it('updates keys correctly', function() {
+    it('updates keys correctly (simple)', function() {
+        let heap = new Heap();
+        let node = new Node(1, 1)
+        heap.push(3, node);
+        heap.updateKey(5, node);
+        expect(heap.list.get(0).key).to.equal(5);
+    });
+
+    it('updates keys correctly (complex)', function() {
         let heap = new Heap();
         for (let i = 1; i <= 231; i++) {
             if (i % 5 == 0) {
-                let cur = heap.array[Math.floor(i / 2)]
+                let cur = heap.list.get(Math.floor(i / 2))
                 let m;
                 if (cur.key % 2 == 0) {
                     m = -cur.node.x;
@@ -101,7 +104,7 @@ describe('Heap', function() {
 
         // Huono tapa mut teinpä näin
         for (let i = 0; i < heap.size; i++) {
-            let v = heap.array[i];
+            let v = heap.list.get(i);
             let n = v.node;
             let c = n.hashCode();
             let success = heap.nodeIndexes[c] === i;

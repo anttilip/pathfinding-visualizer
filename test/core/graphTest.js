@@ -146,8 +146,12 @@ describe('Graph', function() {
         it('should have correct neighbours', function() {
             let graph = new Graph(16);
             let node = graph.nodes[5][9];
-            let corr = [graph.nodes[5][8], graph.nodes[5][10], graph.nodes[4][9], graph.nodes[6][9], graph.nodes[4][8], graph.nodes[4][9], graph.nodes[6][8], graph.nodes[6][10]]
-            expect(graph.getNodesNeighbours(node)).to.deep.include.members(corr);
+            let corr = [
+                graph.nodes[5][8], graph.nodes[5][10], graph.nodes[4][9],
+                graph.nodes[6][9], graph.nodes[4][8], graph.nodes[4][9],
+                graph.nodes[6][8], graph.nodes[6][10]]
+
+            expect(graph.getNodesNeighbours(node).array).to.deep.include.members(corr);
         });
     });
     describe('Node empty', function() {

@@ -20,7 +20,7 @@ class AStar {
         // Nodes that have been seen but not processed yet.
         let openSet = new Heap();
         // Ordered list of nodes which have been seen.
-        let openedList = [];
+        let openedList = new List();
 
         let start = this.graph.startNode;
         let goal = this.graph.goalNode;
@@ -52,7 +52,7 @@ class AStar {
             // Get nodes neighbours
             let neighbours = this.graph.getNodesNeighbours(node);
             for (let i = 0; i < neighbours.length; i++) {
-                let neighbour = neighbours[i];
+                let neighbour = neighbours.get(i);
 
                 // If neighbour is already processed move to next neigbour
                 if (neighbour.closed) {
@@ -93,11 +93,12 @@ class AStar {
     }
 
     _backtrack(node) {
-        let path = [];
+        let path = new List();
         while (node !== undefined) {
             path.push(node);
             node = node.parent;
         }
-        return path.reverse();
+        path.reverse();
+        return path;
     }
 }

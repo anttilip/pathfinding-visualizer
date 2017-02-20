@@ -7,7 +7,8 @@ class Visualizer {
      */
     constructor(result, graph) {
         this.graph = graph;
-        this.openedList = result.opened.reverse();
+        this.openedList = result.opened;
+        this.openedList.reverse();
         this.path = result.path;
         this.currentNode = graph.goalNode;
         this.visualizationComplete = false;
