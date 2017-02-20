@@ -1,12 +1,12 @@
-/** Class representing a graph or grid. */
-class Graph {
+/** Class representing a grid or grid. */
+class Grid {
     constructor(size = undefined, matrix = undefined) {
         if (size !== undefined) {
             this._init(size);
         } else if (matrix !== undefined) {
             this._initFromMatrix(matrix);
         } else {
-            throw "Pass either size or matrix to Graph";
+            throw "Pass either size or matrix to Grid";
         }
         // Some gui helpers
         this.currentlyDrawing = false;
@@ -16,12 +16,12 @@ class Graph {
 
     _init(size) {
         this.size = size;
-        this.nodes = this._createGraph(size);
+        this.nodes = this._createGrid(size);
     }
 
     _initFromMatrix(matrix) {
         this.size = matrix.length;
-        this.nodes = this._createGraph(this.size);
+        this.nodes = this._createGrid(this.size);
 
         this._setTypes(matrix);
     }
@@ -74,7 +74,7 @@ class Graph {
         }
     }
 
-    _createGraph() {
+    _createGrid() {
         // 2D node array
         let nodes = new Array(this.size);
         for (let i = 0; i < this.size; i++) {
@@ -150,16 +150,16 @@ class Graph {
         return x < 0 || x > limit || y < 0 || y > limit;
     }
 
-    screenToGraph(x) {
+    screenToGrid(x) {
         return Math.floor(x / this.nodeSize);
     }
 
-    graphToScreen(x) {
+    gridToScreen(x) {
         return x * this.nodeSize;
     }
 
-    clearGraph() {
-        this.nodes = this._createGraph();
+    clearGrid() {
+        this.nodes = this._createGrid();
     }
 
     resetNodes() {

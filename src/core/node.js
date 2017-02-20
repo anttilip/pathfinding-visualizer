@@ -17,7 +17,7 @@ let nodeType = {
     }
 };
 
-/** Class representing a node on graph / grid. */
+/** Class representing a node on grid / grid. */
 class Node {
     /**
      * Create node.

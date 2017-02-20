@@ -3,14 +3,14 @@ class Visualizer {
     /**
      * Create Visualizer.
      * @param {Array.<{prev: Array, dist: Array, seenList: Array}>}} result - Result from found path.
-     * @param {Graph} graph - Graph on which the shortest path was found.
+     * @param {Grid} grid - Grid on which the shortest path was found.
      */
-    constructor(result, graph) {
-        this.graph = graph;
+    constructor(result, grid) {
+        this.grid = grid;
         this.openedList = result.opened;
         this.openedList.reverse();
         this.path = result.path;
-        this.currentNode = graph.goalNode;
+        this.currentNode = grid.goalNode;
         this.visualizationComplete = false;
         this.hslToStr = h => 'hsl(' + h + ', 50%, 50%)';
     }
@@ -39,7 +39,7 @@ class Visualizer {
         for (let i = 0; i < speed && this.openedList.length !== 0; i++) {
             let node = this.openedList.pop();
             let color = this.hslToStr(this._distanceToHSL(node.gScore), 50, 50);
-            node.draw(context, this.graph.nodeSize, color);
+            node.draw(context, this.grid.nodeSize, color);
         }
     }
 
@@ -51,8 +51,8 @@ class Visualizer {
         if (this.currentNode.parent === undefined) {
             this.visualizationComplete = true;
             // Highlight start and goal nodes
-            this.graph.startNode.draw(context, this.graph.nodeSize, '#339949');
-            this.graph.goalNode.draw(context, this.graph.nodeSize, '#933');
+            this.grid.startNode.draw(context, this.grid.nodeSize, '#339949');
+            this.grid.goalNode.draw(context, this.grid.nodeSize, '#933');
             return;
         }
 
@@ -60,10 +60,10 @@ class Visualizer {
         let parent = this.currentNode.parent;
 
         context.beginPath();
-        context.moveTo(this.graph.graphToScreen(node.x + 0.5),
-            this.graph.graphToScreen(node.y + 0.5));
-        context.lineTo(this.graph.graphToScreen(parent.x + 0.5),
-            this.graph.graphToScreen(parent.y + 0.5));
+        context.moveTo(this.grid.gridToScreen(node.x + 0.5),
+            this.grid.gridToScreen(node.y + 0.5));
+        context.lineTo(this.grid.gridToScreen(parent.x + 0.5),
+            this.grid.gridToScreen(parent.y + 0.5));
         context.stroke();
         this.currentNode = parent;
     }
@@ -71,8 +71,8 @@ class Visualizer {
     _distanceToHSL(distance) {
         let min = 133;
         let max = 360 - 133;
-        let end = this.graph.goalNode;
-        let maxDist = this.graph.goalNode.gScore;
+        let end = this.grid.goalNode;
+        let maxDist = this.grid.goalNode.gScore;
         return min + distance * max / maxDist;
     }
 }

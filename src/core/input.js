@@ -2,11 +2,11 @@
 class Input {
     /**
      * Create Input.
-     * @param {Canvas} canvas: canvas on which graph is drawn.
-     * @param {Graph} graph: graph which contains all the nodes.
+     * @param {Canvas} canvas: canvas on which grid is drawn.
+     * @param {Grid} grid: grid which contains all the nodes.
      */
-    constructor(canvas, graph) {
-        this.graph = graph;
+    constructor(canvas, grid) {
+        this.grid = grid;
         this.isDragging = false;
         this.draggedNode = undefined;
         this._createListeners(canvas);
@@ -18,31 +18,31 @@ class Input {
         if (renderer.mode == mode.EDIT) {
             if (this.draggedNode === nodeType.START) {
                 // If user is dragging the start node, move it with mouse
-                this.graph.startNode.type = nodeType.EMPTY;
-                this.graph.nodes[x][y].type = nodeType.START;
-                this.graph.startNode.draw(canvas.getContext('2d'), this.graph.nodeSize);
-                this.graph.startNode = this.graph.nodes[x][y];
+                this.grid.startNode.type = nodeType.EMPTY;
+                this.grid.nodes[x][y].type = nodeType.START;
+                this.grid.startNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
+                this.grid.startNode = this.grid.nodes[x][y];
             } else if (this.draggedNode === nodeType.GOAL) {
                 // If user is dragging goal node, move it with mouse
-                this.graph.goalNode.type = nodeType.EMPTY;
-                this.graph.nodes[x][y].type = nodeType.GOAL;
-                this.graph.goalNode.draw(canvas.getContext('2d'), this.graph.nodeSize);
-                this.graph.goalNode = this.graph.nodes[x][y];
+                this.grid.goalNode.type = nodeType.EMPTY;
+                this.grid.nodes[x][y].type = nodeType.GOAL;
+                this.grid.goalNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
+                this.grid.goalNode = this.grid.nodes[x][y];
             }
             // toggle node type, e.g. EMPTY -> WALL
-            this.graph.toggleNode(x, y);
+            this.grid.toggleNode(x, y);
             // Draw changed node
-            this.graph.nodes[x][y].draw(canvas.getContext('2d'), this.graph.nodeSize);
+            this.grid.nodes[x][y].draw(canvas.getContext('2d'), this.grid.nodeSize);
         } else {
             renderer.changeMode(mode.EDIT);
         }
     }
 
     _onSizeChange(size) {
-        this.graph = new Graph(size);
+        this.grid = new Grid(size);
 
-        // Set renderer to use the new graph
-        renderer.graph = this.graph;
+        // Set renderer to use the new grid
+        renderer.grid = this.grid;
         renderer.changeMode(mode.EDIT);
     }
 
@@ -60,8 +60,8 @@ class Input {
 
     _mouseCoordinatesToGrid(coord) {
         return {
-            x: this.graph.screenToGraph(coord.x),
-            y: this.graph.screenToGraph(coord.y)
+            x: this.grid.screenToGrid(coord.x),
+            y: this.grid.screenToGrid(coord.y)
         };
     }
 
@@ -70,9 +70,9 @@ class Input {
         canvas.addEventListener('mousedown', (evt) => {
             this.isDragging = true;
             let coord = this._mouseCoordinatesToGrid(this._getMouseCoordinates(evt));
-            if (this.graph.nodes[coord.x][coord.y] === this.graph.startNode ||
-                this.graph.nodes[coord.x][coord.y] === this.graph.goalNode) {
-                this.draggedNode = this.graph.nodes[coord.x][coord.y].type;
+            if (this.grid.nodes[coord.x][coord.y] === this.grid.startNode ||
+                this.grid.nodes[coord.x][coord.y] === this.grid.goalNode) {
+                this.draggedNode = this.grid.nodes[coord.x][coord.y].type;
             }
 
             this._onMouseInput(coord.x, coord.y);
@@ -81,7 +81,7 @@ class Input {
         addEventListener('mouseup', () => {
             this.isDragging = false;
             this.draggedNode = undefined;
-            this.graph.currentlyDrawing = false;
+            this.grid.currentlyDrawing = false;
         });
 
         canvas.addEventListener('mousemove', (evt) => {
