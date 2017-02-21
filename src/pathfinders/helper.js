@@ -3,7 +3,7 @@ const SQRT2 = Math.sqrt(2);
 
 // Heuristics
 let Heuristics = {
-    DIJKSTRA: function(node, goal) {
+    NONE: function(node, goal) {
         return 0;
     },
 
@@ -35,22 +35,32 @@ let Heuristics = {
 const config = {
     DIJKSTRA: {
         algo: AStar,
-        heuristic: Heuristics.DIJKSTRA,
+        heuristic: Heuristics.NONE,
+        name: 'Dijkstra'
     },
     ASTAR_OCTILE: {
         algo: AStar,
         heuristic: Heuristics.OCTILE,
+        name: 'A* (octile distance)'
     },
     ASTAR_EUCLIDEAN: {
         algo: AStar,
         heuristic: Heuristics.EUCLIDEAN,
+        name: 'A* (euclidean distance)'
     },
     ASTAR_MANHATTAN: {
         algo: AStar,
         heuristic: Heuristics.MANHATTAN,
+        name: 'A* (manhattan distance)'
     },
     BEST_FIRST: {
         algo: AStar,
         heuristic: Heuristics.SQUARED_EUCLIDEAN,
+        name: 'Best first'
+    },
+    DFS: {
+        algo: DFS,
+        heuristic: Heuristics.NONE,
+        name: 'Depth first (DFS)'
     }
 };
