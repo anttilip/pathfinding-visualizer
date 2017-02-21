@@ -2,6 +2,7 @@ module.exports = function(config) {
   config.set({
       frameworks: ['mocha', 'chai'],
     files: [
+      '../src/pathfinders/finder.js',
       '../src/!(core)/*.js',
       '../src/core/node.js',
       '../src/core/grid.js',
