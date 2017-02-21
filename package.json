@@ -6,6 +6,7 @@
   "main": "index.html",
   "scripts": {
     "test": "karma start test/karma.conf.js --single-run --reporters coverage",
+    "dev-test": "karma start test/karma.conf.js --browsers Firefox --reporters mocha",
     "travis": "karma start test/karma.conf.js --browsers Firefox --single-run"
   },
   "repository": {
@@ -21,6 +22,7 @@
     "karma-coveralls": "^1.1.2",
     "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.2",
     "mocha": "^3.2.0"
   }
 }

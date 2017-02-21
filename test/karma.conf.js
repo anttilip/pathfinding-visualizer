@@ -13,7 +13,7 @@ module.exports = function(config) {
     ],
 
     // coverage reporter generates the coverage
-    reporters: ['progress', 'coverage', 'coveralls'],
+    reporters: ['progress', 'coverage', 'coveralls', 'mocha'],
 
     preprocessors: {
       // source files, that you wanna generate coverage for

@@ -145,11 +145,6 @@ class Grid {
         return type == nodeType.EMPTY || type == nodeType.GOAL;
     }
 
-    _outOfBounds(x, y) {
-        let limit = this.size * this.nodeSize - 1;
-        return x < 0 || x > limit || y < 0 || y > limit;
-    }
-
     screenToGrid(x) {
         return Math.floor(x / this.nodeSize);
     }

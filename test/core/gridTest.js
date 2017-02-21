@@ -154,31 +154,55 @@ describe('Grid', function() {
             expect(grid.getNodesNeighbours(node).array).to.deep.include.members(corr);
         });
     });
+
     describe('Node empty', function() {
         it('should tell that empty node is empty', function() {
             let grid = new Grid(16);
             expect(grid._isEmpty(3, 3)).to.be.true;
         });
+
         it('should tell that wall node is not empty', function() {
             let grid = new Grid(16);
             // wall to 5, 5
             grid.toggleNode(5, 5);
             expect(grid._isEmpty(5, 5)).to.be.false;
         });
+
         it('should tell that start node is not empty', function() {
             let grid = new Grid(16);
             // start node
             expect(grid._isEmpty(0, 0)).to.be.false;
         });
+
         it('should tell that goal node is empty', function() {
             let grid = new Grid(16);
             // goal node
             expect(grid._isEmpty(15, 15)).to.be.true;
         });
+
         it('should tell that out of bounds node is not empty', function() {
             let grid = new Grid(16);
             // // out of bounds
             expect(grid._isEmpty(16, 15)).to.be.false;
+        });
+    });
+
+    describe('Clear', function() {
+        it('should clear all nodes', function() {
+            let grid = new Grid(16);
+            grid.nodes[3][3].type = nodeType.WALL;
+            grid.clearGrid();
+            expect(grid.nodes[3][3].type).to.equal(nodeType.EMPTY);
+        });
+    });
+
+    describe('Reset', function() {
+        it('should reset all nodes', function() {
+            let grid = new Grid(16);
+            grid.nodes[3][3].opened = true;
+            grid.resetNodes();
+
+            expect(grid.nodes[3][3].opened).to.be.false;
         });
     });
 });
