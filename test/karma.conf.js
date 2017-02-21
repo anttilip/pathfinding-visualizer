@@ -13,7 +13,7 @@ module.exports = function(config) {
     ],
 
     // coverage reporter generates the coverage
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress', 'coverage', 'coveralls'],
 
     preprocessors: {
       // source files, that you wanna generate coverage for
@@ -24,8 +24,9 @@ module.exports = function(config) {
 
     // optionally, configure the reporter
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+      type : 'lcov',
+      dir : 'coverage/',
+      subdir: 'lcov'
     }
   });
 };

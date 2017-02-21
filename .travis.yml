@@ -9,3 +9,5 @@ before_install:
   - npm install
 addons:
   firefox: "50.0"
+script:
+  - npm run travis
