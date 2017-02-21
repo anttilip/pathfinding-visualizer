@@ -43,7 +43,13 @@ class Renderer {
         let result = pathfinder.findShortestPath();
         let deltaTime = performance.now() - t0;
 
+
+        // Give stats from pathfinding
+        console.log(conf.name);
+        console.log('Found path with length: ' + Number((result.path.last().gScore).toFixed(2)));
         console.log('Took: ' + Math.round(deltaTime) + ' ms.');
+        console.log('Opened: ' + result.opened.length + ' nodes');
+
 
         this.visualizer = new Visualizer(result, this.grid);
         this.changeMode(mode.VISUALIZE);
