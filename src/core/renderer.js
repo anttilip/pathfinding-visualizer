@@ -62,7 +62,7 @@ class Renderer {
 
 let speedSlider = document.querySelector("#speedSlider");
 let canvas = document.getElementById("main-canvas");
-let renderer = new Renderer(canvas, size.value);
+let renderer = new Renderer(canvas);
 setInterval(() => {
     renderer.update(speedSlider.value, size.value);
 }, 0);
