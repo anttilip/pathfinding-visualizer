@@ -10,6 +10,7 @@ class Visualizer {
         this.openedList = result.opened;
         this.openedList.reverse();
         this.path = result.path;
+        this.maxDist = this._findMaxDistance(this.openedList);
         this.currentNode = grid.goalNode;
         this.visualizationComplete = false;
         this.hslToStr = h => 'hsl(' + h + ', 50%, 50%)';
@@ -72,7 +73,16 @@ class Visualizer {
         let min = 133;
         let max = 360 - 133;
         let end = this.grid.goalNode;
-        let maxDist = this.grid.goalNode.gScore;
-        return min + distance * max / maxDist;
+        return min + distance * max / this.maxDist;
+    }
+
+    _findMaxDistance(list) {
+        let max = 0;
+        for (let i = 0; i < list.length; i++) {
+            if (list.get(i).gScore > max) {
+                max = list.get(i).gScore;
+            }
+        }
+        return max;
     }
 }
