@@ -11,7 +11,8 @@ describe('List', function() {
     it('should not allow negative length', function() {
         // Must be in anonymous function to work
         // https://github.com/chaijs/chai/issues/71
-        expect(() => new List(-1)).to.be.an.error;
+        // Must have that string part or it doesn't work
+        expect(() => new List(-1)).to.throw(Error, "Size must be positive integer");
     });
 
     it('should have correct array length', function() {

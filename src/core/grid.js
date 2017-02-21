@@ -6,7 +6,7 @@ class Grid {
         } else if (matrix !== undefined) {
             this._initFromMatrix(matrix);
         } else {
-            throw "Pass either size or matrix to Grid";
+            throw Error("Pass either size or matrix to Grid");
         }
         // Some gui helpers
         this.currentlyDrawing = false;
