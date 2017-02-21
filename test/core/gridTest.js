@@ -5,6 +5,9 @@ canvas = {
     width: 800
 };
 describe('Grid', function() {
+    it('should be given valid parameters', function() {
+        expect(() => new Grid()).to.be.an.error;
+    });
     describe('size', function() {
         it('should have correct size', function() {
             let grid = new Grid(16);
@@ -28,15 +31,18 @@ describe('Grid', function() {
         it('toggle node WALL -> EMPTY', function() {
             let grid = new Grid(16);
 
+            expect(grid.drawingType).to.equal(nodeType.WALL);
             grid.toggleNode(3, 3);
             let type = grid.nodes[3][3].type;
-            expect(type).to.equal(nodeType.WALL);
 
+            expect(type).to.equal(nodeType.WALL);
+            expect(grid.drawingType).to.equal(nodeType.WALL);
             grid.drawingType = nodeType.EMPTY;
 
             grid.toggleNode(3, 3);
             type = grid.nodes[3][3].type;
             expect(type).to.equal(nodeType.EMPTY);
+            // expect(grid.drawingType).to.equal(nodeType.WALL);
         });
 
         it('toggle node does not toggle start', function() {

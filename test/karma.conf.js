@@ -2,14 +2,11 @@ module.exports = function(config) {
   config.set({
       frameworks: ['mocha', 'chai'],
     files: [
-      '../src/data-structures/*.js',
-      '../src/pathfinders/*.js',
+      '../src/!(core)/*.js',
       '../src/core/node.js',
       '../src/core/grid.js',
       'pathfinders/mazes.js',
-      'data-structures/*.js',
-      'core/*.js',
-      'pathfinders/*.js'
+      '!(coverage)/*.js'
     ],
 
     // coverage reporter generates the coverage

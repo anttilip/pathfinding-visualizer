@@ -48,4 +48,9 @@ describe('Node', function() {
         let node = new Node(15, 15);
         expect(node.equals((new Node(15, 14)))).to.be.false;
     });
+
+    it('should not equal other object', function() {
+        let node = new Node(15, 15);
+        expect(node.equals('im a node')).to.be.false;
+    });
 });
