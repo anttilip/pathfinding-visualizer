@@ -103,4 +103,30 @@ describe('List', function() {
             expect(list.array).to.eql(arr.reverse());
         });
     });
+
+    describe('helper functions', function() {
+        it('first should work when values]', function() {
+            let list = new List(3);
+            let arr = [1, 2, 3];
+            arr.forEach(x => list.push(x));
+            expect(list.first()).to.equal(1);
+        });
+
+        it('first should return undefined when empty', function() {
+            let list = new List();
+            expect(list.first()).to.be.undefined;
+        });
+
+        it('last should work when values]', function() {
+            let list = new List(3);
+            let arr = [1, 2, 3];
+            arr.forEach(x => list.push(x));
+            expect(list.last()).to.equal(3);
+        });
+
+        it('last should return undefined when empty', function() {
+            let list = new List();
+            expect(list.last()).to.be.undefined;
+        });
+    });
 });

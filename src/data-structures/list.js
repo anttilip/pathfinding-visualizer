@@ -5,6 +5,10 @@ class List {
         }
         this.array = new Array(initialSize);
         this.length = 0;
+
+        // Helper functions
+        this.first = () => this.array[0];
+        this.last = () => this.array[this.length - 1];
     }
 
     push(value) {
