@@ -1,17 +1,13 @@
 /** A* search algorithm. */
-class AStar {
+class AStar extends Finder {
     /**
      * Constructor for A* search algorithm.
-     * @param {Grid} grid - Grid on which path is searched.
-     * @param {function} heuristic - Heuristic used for searching.
+     * @param {...opts} - Contains various variables, e.g. grid, heuristic.
+     *                    Will be passed to Finder.
      */
-    constructor(grid, heuristic) {
-        this.grid = grid;
-        // P is estimated max distance for breaking ties
-        let p = grid.size;
-        this.heuristic = (node, goal) => (heuristic(node, goal) * (1 + 1 / p));
+    constructor(...opts) {
+        super(...opts);
     }
-
     /**
      * Find shortest path in a grid.
      * @return {{path:Node, opened:Node}[]} - Shortest path and all opened nodes.
@@ -42,7 +38,6 @@ class AStar {
 
             // Goal node was found
             if (goal.equals(node)) {
-                console.log('Goal found with path distance: ' + node.gScore);
                 return {
                     path: this._backtrack(node),
                     opened: openedList
@@ -85,20 +80,5 @@ class AStar {
             path: undefined,
             opened: openedList
         };
-    }
-
-    _getDistance(node, next) {
-        let weight = node.x == next.x || node.y == next.y ? 1 : 1.414;
-        return node.gScore + weight;
-    }
-
-    _backtrack(node) {
-        let path = new List();
-        while (node !== undefined) {
-            path.push(node);
-            node = node.parent;
-        }
-        path.reverse();
-        return path;
     }
 }
