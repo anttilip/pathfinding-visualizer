@@ -1,5 +1,5 @@
 # Pathfinding visualizer
-[![Build Status](https://travis-ci.org/anttilip/pathfinding-visualizer.svg?branch=master)](https://travis-ci.org/anttilip/pathfinding-visualizer)
+[![Build Status](https://travis-ci.org/anttilip/pathfinding-visualizer.svg?branch=master)](https://travis-ci.org/anttilip/pathfinding-visualizer) [![Coverage Status](https://coveralls.io/repos/github/anttilip/pathfinding-visualizer/badge.svg?branch=master)](https://coveralls.io/github/anttilip/pathfinding-visualizer?branch=master)
 
 You can try it [here!](https://anttilip.github.io/pathfinding-visualizer/)
 
