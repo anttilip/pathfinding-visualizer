@@ -46,7 +46,11 @@ class Renderer {
 
         // Give stats from pathfinding
         console.log(conf.name);
-        console.log('Found path with length: ' + Number((result.path.last().gScore).toFixed(2)));
+        if (result.path) {
+            console.log('Found path with length: ' + Number((result.path.last().gScore).toFixed(2)));
+        } else {
+            console.log('Path not found.');
+        }
         console.log('Took: ' + Math.round(deltaTime) + ' ms.');
         console.log('Opened: ' + result.opened.length + ' nodes');
 
