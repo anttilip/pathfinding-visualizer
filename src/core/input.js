@@ -18,22 +18,23 @@ class Input {
         if (renderer.mode == mode.EDIT) {
             if (this.draggedNode === nodeType.START) {
                 // If user is dragging the start node, move it with mouse
-                this.grid.startNode.type = nodeType.EMPTY;
+                this.grid.startNode.type = nodeType.TRAVERSABLE;
                 this.grid.nodes[x][y].type = nodeType.START;
                 this.grid.startNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
                 this.grid.startNode = this.grid.nodes[x][y];
             } else if (this.draggedNode === nodeType.GOAL) {
                 // If user is dragging goal node, move it with mouse
-                this.grid.goalNode.type = nodeType.EMPTY;
+                this.grid.goalNode.type = nodeType.TRAVERSABLE;
                 this.grid.nodes[x][y].type = nodeType.GOAL;
                 this.grid.goalNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
                 this.grid.goalNode = this.grid.nodes[x][y];
             }
-            // toggle node type, e.g. EMPTY -> WALL
+            // toggle node type, e.g. TRAVERSABLE -> WALL
             this.grid.toggleNode(x, y);
             // Draw changed node
             this.grid.nodes[x][y].draw(canvas.getContext('2d'), this.grid.nodeSize);
         } else {
+            this.grid.resetNodes();
             renderer.changeMode(mode.EDIT);
         }
     }

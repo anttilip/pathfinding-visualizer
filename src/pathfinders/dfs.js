@@ -40,6 +40,6 @@ class DFS extends Finder {
                 }
             }
         }
-        return {path: [], opened: openedList};
+        return {path: undefined, opened: openedList};
     }
 }

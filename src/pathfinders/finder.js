@@ -33,7 +33,7 @@ class Finder {
 
     // Get distance between neighbouring nodes.
     _getDistance(node, next) {
-        let weight = node.x == next.x || node.y == next.y ? 1 : 1.414;
+        let weight = node.x == next.x || node.y == next.y ? 1 : SQRT2;
         return node.gScore + weight;
     }
 

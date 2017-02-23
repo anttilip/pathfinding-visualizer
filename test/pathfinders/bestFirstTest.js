@@ -1,7 +1,7 @@
 describe('Best first', function() {
     describe('solvable', function() {
         solvableMazes.forEach((maze) => {
-            let grid = new Grid(undefined, matrix = maze.maze);
+            let grid = new Grid(undefined, matrix = maze.maze, maze.labels);
             let finder = new AStar(grid, Heuristics.SQUARED_EUCLIDEAN);
             let result = finder.findShortestPath();
 
@@ -13,7 +13,7 @@ describe('Best first', function() {
 
     describe('unsolvable', function() {
         it('should not solve unsolvable', function() {
-            let grid = new Grid(undefined, matrix = unsolvableMaze.maze);
+            let grid = new Grid(undefined, matrix = unsolvableMaze.maze, unsolvableMaze.labels);
             let finder = new AStar(grid, Heuristics.SQUARED_EUCLIDEAN);
             let result = finder.findShortestPath();
 

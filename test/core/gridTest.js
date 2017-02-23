@@ -23,25 +23,25 @@ describe('Grid', function() {
     });
 
     describe('toggle', function() {
-        it('toggle node EMPTY -> WALL', function() {
+        it('toggle node TRAVERSABLE -> WALL', function() {
             let grid = new Grid(16);
             grid.toggleNode(3, 3);
             let type = grid.nodes[3][3].type;
             expect(type).to.equal(nodeType.WALL);
         });
 
-        it('toggle node WALL -> EMPTY', function() {
+        it('toggle node WALL -> TRAVERSABLE', function() {
             let grid = new Grid(16);
 
             grid.toggleNode(3, 3);
             let type = grid.nodes[3][3].type;
 
             expect(type).to.equal(nodeType.WALL);
-            grid.drawingType = nodeType.EMPTY;
+            grid.drawingType = nodeType.TRAVERSABLE;
 
             grid.toggleNode(3, 3);
             type = grid.nodes[3][3].type;
-            expect(type).to.equal(nodeType.EMPTY);
+            expect(type).to.equal(nodeType.TRAVERSABLE);
         });
 
         it('toggle node does not toggle start', function() {
@@ -99,35 +99,34 @@ describe('Grid', function() {
 
     describe('create from matrix', function() {
         it('should be 2D array', function() {
-
-            let grid = new Grid(undefined, matrix = m3.maze);
+            let grid = new Grid(undefined, m3.maze, m3.labels);
             expect(grid.nodes).to.be.a('array');
             expect(grid.nodes[0]).to.be.a('array');
         });
 
         it('should not be too small', function() {
-            let grid = new Grid(undefined, matrix = m1.maze);
+            let grid = new Grid(undefined, m1.maze, m3.labels);
             expect(grid.nodes).to.have.lengthOf(m1.maze.length);
             expect(grid.nodes[0]).to.have.lengthOf(m1.maze.length);
         });
 
         it('should have a start node', function() {
-            let grid = new Grid(undefined, m2.maze);
+            let grid = new Grid(undefined, m2.maze, m2.labels);
             expect(grid.startNode).to.be.an.instanceof(Node);
         });
 
         it('start node should be START', function() {
-            let grid = new Grid(undefined, m2.maze);
+            let grid = new Grid(undefined, m2.maze, m2.labels);
             expect(grid.startNode.type).to.equal(nodeType.START);
         });
 
         it('should have a goal node', function() {
-            let grid = new Grid(undefined, m2.maze);
+            let grid = new Grid(undefined, m2.maze, m2.labels);
             expect(grid.goalNode).to.be.an.instanceof(Node);
         });
 
         it('goal node should be GOAL', function() {
-            let grid = new Grid(undefined, m2.maze);
+            let grid = new Grid(undefined, m2.maze, m2.labels);
             expect(grid.goalNode.type).to.equal(nodeType.GOAL);
         });
     });
@@ -163,32 +162,33 @@ describe('Grid', function() {
     describe('Node empty', function() {
         it('should tell that empty node is empty', function() {
             let grid = new Grid(16);
-            expect(grid._isEmpty(3, 3)).to.be.true;
+            expect(grid._isTraversable(3, 3)).to.be.true;
         });
 
         it('should tell that wall node is not empty', function() {
             let grid = new Grid(16);
             // wall to 5, 5
             grid.toggleNode(5, 5);
-            expect(grid._isEmpty(5, 5)).to.be.false;
+            expect(grid._isTraversable(5, 5)).to.be.false;
         });
 
         it('should tell that start node is not empty', function() {
             let grid = new Grid(16);
             // start node
-            expect(grid._isEmpty(0, 0)).to.be.false;
+            let start = grid.startNode;
+            expect(grid._isTraversable(start.x, start.y)).to.be.false;
         });
 
         it('should tell that goal node is empty', function() {
             let grid = new Grid(16);
             // goal node
-            expect(grid._isEmpty(15, 15)).to.be.true;
+            expect(grid._isTraversable(15, 15)).to.be.true;
         });
 
         it('should tell that out of bounds node is not empty', function() {
             let grid = new Grid(16);
             // // out of bounds
-            expect(grid._isEmpty(16, 15)).to.be.false;
+            expect(grid._isTraversable(16, 15)).to.be.false;
         });
     });
 
@@ -197,7 +197,7 @@ describe('Grid', function() {
             let grid = new Grid(16);
             grid.nodes[3][3].type = nodeType.WALL;
             grid.clearGrid();
-            expect(grid.nodes[3][3].type).to.equal(nodeType.EMPTY);
+            expect(grid.nodes[3][3].type).to.equal(nodeType.TRAVERSABLE);
         });
     });
 

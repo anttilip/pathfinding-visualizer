@@ -2,19 +2,19 @@ describe('A*', function() {
     describe('octile', function() {
         describe('solvable', function() {
             solvableMazes.forEach((maze) => {
-                let grid = new Grid(undefined, matrix = maze.maze);
+                let grid = new Grid(undefined, matrix = maze.maze, maze.labels);
                 let finder = new AStar(grid, Heuristics.OCTILE);
                 let result = finder.findShortestPath();
 
                 it('should solve solvable maze', function() {
-                    expect(grid.goalNode.gScore).to.be.within(maze.dist - 0.1, maze.dist + 0, 1);
+                    expect(grid.goalNode.gScore).to.be.within(maze.dist - 0.1, maze.dist + 0.1);
                 });
             });
         });
 
         describe('unsolvable', function() {
             it('should not solve unsolvable', function() {
-                let grid = new Grid(undefined, matrix = unsolvableMaze.maze);
+                let grid = new Grid(undefined, matrix = unsolvableMaze.maze, unsolvableMaze.labels);
                 let finder = new AStar(grid, Heuristics.OCTILE);
                 let result = finder.findShortestPath();
 
@@ -26,18 +26,18 @@ describe('A*', function() {
     describe('euclidean', function() {
         describe('solvable', function() {
             solvableMazes.forEach((maze) => {
-                let grid = new Grid(undefined, matrix = maze.maze);
+                let grid = new Grid(undefined, matrix = maze.maze, maze.labels);
                 let finder = new AStar(grid, Heuristics.EUCLIDEAN);
                 let result = finder.findShortestPath();
 
                 it('should solve solvable maze', function() {
-                    expect(grid.goalNode.gScore).to.be.within(maze.dist - 0.1, maze.dist + 0, 1);
+                    expect(grid.goalNode.gScore).to.be.within(maze.dist - 0.1, maze.dist + 0.1);
                 });
             });
         })
         describe('unsolvable', function() {
             it('should not solve unsolvable', function() {
-                let grid = new Grid(undefined, matrix = unsolvableMaze.maze);
+                let grid = new Grid(undefined, matrix = unsolvableMaze.maze, unsolvableMaze.labels);
                 let finder = new AStar(grid, Heuristics.EUCLIDEAN);
                 let result = finder.findShortestPath();
 
@@ -50,7 +50,7 @@ describe('A*', function() {
     describe('manhattan', function() {
         describe('solvable', function() {
             solvableMazes.forEach((maze) => {
-                let grid = new Grid(undefined, matrix = maze.maze);
+                let grid = new Grid(undefined, matrix = maze.maze, maze.labels);
                 let finder = new AStar(grid, Heuristics.MANHATTAN);
                 let result = finder.findShortestPath();
 
@@ -61,7 +61,7 @@ describe('A*', function() {
         })
         describe('unsolvable', function() {
             it('should not solve unsolvable', function() {
-                let grid = new Grid(undefined, matrix = unsolvableMaze.maze);
+                let grid = new Grid(undefined, matrix = unsolvableMaze.maze, unsolvableMaze.labels);
                 let finder = new AStar(grid, Heuristics.MANHATTAN);
                 let result = finder.findShortestPath();
 

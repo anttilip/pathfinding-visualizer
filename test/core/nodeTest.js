@@ -1,6 +1,6 @@
 describe('Node', function() {
     it('start as emty', function() {
-        expect(new Node(1, 1).type).to.equal(nodeType.EMPTY);
+        expect(new Node(1, 1).type).to.equal(nodeType.TRAVERSABLE);
     });
 
     it('should equal identical node', function() {

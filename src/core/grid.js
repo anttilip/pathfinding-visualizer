@@ -1,10 +1,10 @@
 /** Class representing a grid or grid. */
 class Grid {
-    constructor(size = undefined, matrix = undefined) {
+    constructor(size = undefined, matrix = undefined, labels = undefined) {
         if (size !== undefined) {
             this._init(size);
-        } else if (matrix !== undefined) {
-            this._initFromMatrix(matrix);
+        } else if (matrix !== undefined && labels !== undefined) {
+            this._initFromMatrix(matrix, labels);
         } else {
             throw Error("Pass either size or matrix to Grid");
         }
@@ -17,32 +17,37 @@ class Grid {
     _init(size) {
         this.size = size;
         this.nodes = this._createGrid(size);
+
+        // Set start and goal nodes
+        this.startNode = this.nodes[1][1];
+        this.startNode.type = nodeType.START;
+        this.goalNode = this.nodes[this.size - 2][this.size - 2];
+        this.goalNode.type = nodeType.GOAL;
+
     }
 
-    _initFromMatrix(matrix) {
+    _initFromMatrix(matrix, labels) {
         this.size = matrix.length;
         this.nodes = this._createGrid(this.size);
 
-        this._setTypes(matrix);
+        this._setTypes(matrix, labels);
     }
 
-    _setTypes(matrix) {
+    _setTypes(matrix, labels) {
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix.length; j++) {
-                switch (matrix[i][j]) {
-                    case nodeType.START.code:
-                        this.nodes[i][j].type = nodeType.START;
-                        break;
-                    case nodeType.GOAL.code:
-                        this.nodes[i][j].type = nodeType.GOAL;
-                        break;
-                    case nodeType.WALL.code:
-                        this.nodes[i][j].type = nodeType.WALL;
-                        break;
-                    default:
-                        this.nodes[i][j].type = nodeType.EMPTY;
+                if (labels !== undefined) {
+                    this.nodes[i][j].type = labels[matrix[i][j]];
+                    if (this.nodes[i][j].type === nodeType.START) {
+                        this.startNode = this.nodes[i][j];
+                    } else if (this.nodes[i][j].type === nodeType.GOAL) {
+                        this.goalNode = this.nodes[i][j];
+                    }
                 }
             }
+        }
+        if (this.startNode === undefined || this.goalNode === undefined) {
+            throw Error("Matrix must have start and goal nodes defined");
         }
     }
 
@@ -50,10 +55,10 @@ class Grid {
         let node = this.nodes[x][y];
         // Determine which color to draw
         if (!this.currentlyDrawing) {
-            if (node.type == nodeType.EMPTY) {
+            if (node.type == nodeType.TRAVERSABLE) {
                 this.drawingType = nodeType.WALL;
             } else if (node.type == nodeType.WALL) {
-                this.drawingType = nodeType.EMPTY;
+                this.drawingType = nodeType.TRAVERSABLE;
             }
             this.currentlyDrawing = true;
         }
@@ -84,12 +89,6 @@ class Grid {
             }
         }
 
-        // Set start and goal nodes
-        this.startNode = nodes[0][0];
-        this.startNode.type = nodeType.START;
-        this.goalNode = nodes[this.size - 1][this.size - 1];
-        this.goalNode.type = nodeType.GOAL;
-
         return nodes;
     }
 
@@ -99,50 +98,50 @@ class Grid {
         let x = node.x;
         let y = node.y;
         // Left
-        if (this._isEmpty(x - 1, y)) {
+        if (this._isTraversable(x - 1, y)) {
             neighbours.push(this.nodes[x - 1][y]);
             left = true;
         }
         // Right
-        if (this._isEmpty(x + 1, y)) {
+        if (this._isTraversable(x + 1, y)) {
             neighbours.push(this.nodes[x + 1][y]);
             right = true;
         }
         // Top
-        if (this._isEmpty(x, y - 1)) {
+        if (this._isTraversable(x, y - 1)) {
             neighbours.push(this.nodes[x][y - 1]);
             top = true;
         }
         // Bottom
-        if (this._isEmpty(x, y + 1)) {
+        if (this._isTraversable(x, y + 1)) {
             neighbours.push(this.nodes[x][y + 1]);
             bottom = true;
         }
         // Top Left
-        if (this._isEmpty(x - 1, y - 1) && (top || left)) {
+        if (this._isTraversable(x - 1, y - 1) && (top || left)) {
             neighbours.push(this.nodes[x - 1][y - 1]);
         }
         // Top right
-        if (this._isEmpty(x + 1, y - 1) && (top || right)) {
+        if (this._isTraversable(x + 1, y - 1) && (top || right)) {
             neighbours.push(this.nodes[x + 1][y - 1]);
         }
         // Bottom left
-        if (this._isEmpty(x - 1, y + 1) && (bottom || left)) {
+        if (this._isTraversable(x - 1, y + 1) && (bottom || left)) {
             neighbours.push(this.nodes[x - 1][y + 1]);
         }
         // Bottom right
-        if (this._isEmpty(x + 1, y + 1) && (bottom || right)) {
+        if (this._isTraversable(x + 1, y + 1) && (bottom || right)) {
             neighbours.push(this.nodes[x + 1][y + 1]);
         }
         return neighbours;
     }
 
-    _isEmpty(x, y) {
+    _isTraversable(x, y) {
         if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1) {
             return false;
         }
         let type = this.nodes[x][y].type;
-        return type == nodeType.EMPTY || type == nodeType.GOAL;
+        return type == nodeType.TRAVERSABLE || type == nodeType.GOAL;
     }
 
     screenToGrid(x) {
@@ -154,7 +153,7 @@ class Grid {
     }
 
     clearGrid() {
-        this.nodes = this._createGrid();
+        this._init(this.size);
     }
 
     resetNodes() {

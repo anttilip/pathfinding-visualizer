@@ -1,18 +1,14 @@
 let nodeType = {
-    EMPTY: {
-        code: 'E',
-        color: '#303030'
+    TRAVERSABLE: {
+        color: '#fdf3e7'
     },
     WALL: {
-        code: 'W',
-        color: '#dedede'
+        color: '#384047'
     },
     START: {
-        code: 'S',
         color: '#0fbc00'
     },
     GOAL: {
-        code: 'G',
         color: '#bc0000'
     }
 };
@@ -27,7 +23,8 @@ class Node {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.type = nodeType.EMPTY;
+        this.type = nodeType.TRAVERSABLE;
+        this.custom_color = undefined;
 
         this.parent = undefined;
 
@@ -39,6 +36,8 @@ class Node {
     }
 
     reset() {
+        this.custom_color = undefined;
+
         this.parent = undefined;
 
         this.opened = false;
@@ -53,7 +52,7 @@ class Node {
         let hash = 359;
         hash = prime * (hash << 5) + this.x;
         hash = prime * (hash << 5) + this.y;
-        return prime * hash + this.type.code.charCodeAt(0);
+        return prime * hash ;
     }
 
     /**
@@ -75,9 +74,10 @@ class Node {
      * @param {string} color  - Hex color or e.g hsl(50, 50%, 100%).
      */
     draw(context, nodeSize, color = undefined) {
-        if (color === undefined) {
-            color = this.type.color;
-        }
+        color = this.custom_color || this.type.color;
+        // if (color === undefined) {
+        //     color = this.type.color;
+        // }
         context.fillStyle = color;
         context.fillRect(this.x * nodeSize, this.y * nodeSize, nodeSize, nodeSize);
     }

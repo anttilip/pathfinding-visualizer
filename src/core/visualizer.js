@@ -13,7 +13,7 @@ class Visualizer {
         this.maxDist = this._findMaxDistance(this.openedList);
         this.currentNode = grid.goalNode;
         this.visualizationComplete = false;
-        this.hslToStr = h => 'hsl(' + h + ', 50%, 50%)';
+        this.hslToStr = (h, s, l) => 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
     }
 
     /**
@@ -39,8 +39,8 @@ class Visualizer {
     _visualizeSeen(context, speed) {
         for (let i = 0; i < speed && this.openedList.length !== 0; i++) {
             let node = this.openedList.pop();
-            let color = this.hslToStr(this._distanceToHSL(node.gScore), 50, 50);
-            node.draw(context, this.grid.nodeSize, color);
+            node.custom_color = this.hslToStr(this._distanceToHSL(node.gScore), 50, 50);
+            node.draw(context, this.grid.nodeSize);
         }
     }
 
@@ -52,8 +52,10 @@ class Visualizer {
         if (this.currentNode.parent === undefined) {
             this.visualizationComplete = true;
             // Highlight start and goal nodes
-            this.grid.startNode.draw(context, this.grid.nodeSize, '#339949');
-            this.grid.goalNode.draw(context, this.grid.nodeSize, '#933');
+            this.grid.startNode.custom_color = '#339949';
+            this.grid.goalNode.custom_color = '#933';
+            this.grid.startNode.draw(context, this.grid.nodeSize);
+            this.grid.goalNode.draw(context, this.grid.nodeSize);
             return;
         }
 
