@@ -10,7 +10,7 @@ class Grid {
         }
         // Some gui helpers
         this.currentlyDrawing = false;
-        this.nodeSize = Math.floor(canvas.height / this.size);
+        this.nodeSize = canvas.height / this.size;
         this.drawingType = nodeType.WALL;
     }
 
@@ -45,9 +45,6 @@ class Grid {
                     }
                 }
             }
-        }
-        if (this.startNode === undefined || this.goalNode === undefined) {
-            throw Error("Matrix must have start and goal nodes defined");
         }
     }
 
@@ -145,7 +142,7 @@ class Grid {
     }
 
     screenToGrid(x) {
-        return Math.floor(x / this.nodeSize);
+        return Math.min(Math.floor(x / this.nodeSize), this.size - 1);
     }
 
     gridToScreen(x) {
@@ -162,5 +159,21 @@ class Grid {
                 this.nodes[i][j].reset();
             }
         }
+    }
+
+    setStart(x, y) {
+        if (this.startNode !== undefined) {
+            this.startNode.type = nodeType.TRAVERSABLE;
+        }
+        this.nodes[x][y] = nodeType.START;
+        this.startNode = this.nodes[x][y];
+    }
+
+    setGoal(x, y) {
+        if (this.goalNode !== undefined) {
+            this.goalNode.type = nodeType.TRAVERSABLE;
+        }
+        this.nodes[x][y] = nodeType.GOAL;
+        this.startNode = this.nodes[x][y];
     }
 }
