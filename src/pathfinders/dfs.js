@@ -15,8 +15,6 @@ class DFS extends Finder {
             let node = this.stack.pop();
             node.closed = true;
 
-
-
             let neighbours = this.grid.getNodesNeighbours(node);
             for (let i = 0; i < neighbours.length; i++) {
                 let neigbour = neighbours.get(i);

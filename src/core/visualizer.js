@@ -39,7 +39,7 @@ class Visualizer {
     _visualizeSeen(context, speed) {
         for (let i = 0; i < speed && this.openedList.length !== 0; i++) {
             let node = this.openedList.pop();
-            node.custom_color = this.hslToStr(this._distanceToHSL(node.gScore), 50, 50);
+            node.custom_color = this.hslToStr(this._distanceToHSL(node.gScore), 100, 85);
             node.draw(context, this.grid.nodeSize);
         }
     }

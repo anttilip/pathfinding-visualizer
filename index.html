@@ -3,31 +3,70 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Pathfinding visualizer</title>
+		<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+		<link href='styles/main.css' rel='stylesheet' type='text/css'>
 	</head>
-	<body bgcolor="#015366">
-		<div>
-        	<canvas id="main-canvas"></canvas>
-		</div>
-		<div>
-			<button type="button" id="run">Run</button>
-			<button type="button" id="clear">Clear</button> Speed:
-			<input id="speedSlider" type="range" min="1" max="100" value="1"></input>
-			<select id='size'>
-			  <option value=16>Tiny (16x16)</option>
-			  <option value=32 selected="selected">Small (32x32)</option>
-			  <option value=64>Regular (64x64)</option>
-			  <option value=128>Large (128x128)</option>
-			  <option value=256>Huge (256x256)</option>
-			</select>
-			<select id='algo'>
-			  <option value=DIJKSTRA selected="selected">Dijkstra</option>
-			  <option value=ASTAR_OCTILE>A* (octile distance)</option>
-			  <option value=ASTAR_EUCLIDEAN>A* (euclidean distance)</option>
-			  <option value=ASTAR_MANHATTAN>A* (manhattan distance)</option>
-			  <option value=BEST_FIRST>Best first (greedy)</option>
-			  <option value=DFS>Depth first (DFS)</option>
-			</select>
+	<body >
+		<div id="outer">
+			<div id="sidebar">
+				<h1>Pathfinding visualizer</h1>
+				This website visualizes pathfinding algorithms.
+				</br>
+				</br>
+				Currently available algorithms are Dijkstra, A* with several
+				different heuristics, depth first and greedy best first.
+				</br>
+				</br>
+				A* is an extension to Dijkstra's algorithm and uses heuristics
+				to determine which nodes should be visited next.
+				</br>
+				</br>
+				A* selects the path that minimizes <code>f(n) = g(n) + h(n)</code>,
+				</br>
+				where <code>n</code> is the last node on the path, <code>g(n)</code>
+				is the cost of path from the start node to n, and <code>h(n)</code> is a heuristic that
+				estimates the cost of the cheapest path from n to the goal.
+				</br>
+				</br>
+				One of the most popular A* heuristic is Euclidean distance:
+				<pre class="prettyprint">
+// Euclidean distance
+function(node, goal) {
+    let dx = Math.abs(node.x - goal.x);
+    let dy = Math.abs(node.y - goal.y);
+    return Math.sqrt(dx * dx + dy * dy);
+}				</pre>
+			</div>
+			<div id="inner">
+		    	<canvas id="main-canvas"></canvas>
+				<p id="results"></p>
+				<div id="controls">
+					<button type="button" id="run">Run</button>
+					<button type="button" id="clear">Clear</button>
+					<select id='size'>
+					  <option value=16>Tiny (16x16)</option>
+					  <option value=32>Small (32x32)</option>
+					  <option value=64 selected="selected">Regular (64x64)</option>
+					  <option value=128>Large (128x128)</option>
+					  <option value=256>Huge (256x256)</option>
+					</select>
+					<select id='algo'>
+					  <option value=DIJKSTRA selected="selected">Dijkstra</option>
+					  <option value=ASTAR_OCTILE>A* (octile distance)</option>
+					  <option value=ASTAR_EUCLIDEAN>A* (euclidean distance)</option>
+					  <option value=ASTAR_MANHATTAN>A* (manhattan distance)</option>
+					  <option value=BEST_FIRST>Best first (greedy)</option>
+					  <option value=DFS>Depth first (DFS)</option>
+					</select>
+				   Speed: <input id="speedSlider" type="range" min="1" max="100" value="1"></input>
+			   </div>
+			</div>
 
+		</div>
+
+		<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+		<script src="src/utils/fileHelpers.js"></script>
 		<script src="src/data-structures/heap.js"></script>
 		<script src="src/data-structures/list.js"></script>
 		<script src="src/pathfinders/finder.js"></script>

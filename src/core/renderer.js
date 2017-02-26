@@ -11,7 +11,7 @@ class Renderer {
         this.canvas.height = 768;
         this.context = canvas.getContext("2d");
 
-        this.grid = new Grid(32);
+        this.grid = new Grid(64);
         this.input = new Input(canvas, this.grid);
         this.visualizer = undefined;
         this.mode = undefined;
@@ -43,20 +43,22 @@ class Renderer {
         let result = pathfinder.findShortestPath();
         let deltaTime = performance.now() - t0;
 
-
-        // Give stats from pathfinding
-        console.log(conf.name);
-        if (result.path) {
-            console.log('Found path with length: ' + Number((result.path.last().gScore).toFixed(2)));
-        } else {
-            console.log('Path not found.');
-        }
-        console.log('Took: ' + Math.round(deltaTime) + ' ms.');
-        console.log('Opened: ' + result.opened.length + ' nodes');
-
+        this._showResults(result, deltaTime, conf);
 
         this.visualizer = new Visualizer(result, this.grid);
         this.changeMode(mode.VISUALIZE);
+    }
+
+    _showResults(result, deltaTime, conf) {
+        // Give stats from pathfinding
+        document.getElementById("results").innerHTML = conf.name;
+        if (result.path) {
+            document.getElementById("results").innerHTML += ' found a path with length ' + Number((result.path.last().gScore).toFixed(2)) + '. ';
+        } else {
+            document.getElementById("results").innerHTML += ' did not find a path. ';
+        }
+        document.getElementById("results").innerHTML += 'It took ' + Math.round(deltaTime) + ' ms ';
+        document.getElementById("results").innerHTML += 'while opening ' + result.opened.length + ' nodes.';
     }
 
     clearGrid() {
@@ -79,4 +81,7 @@ setInterval(() => {
 
 // Set buttons to run functions
 document.getElementById("run").onclick = () => renderer.run();
-document.getElementById("clear").onclick = () => renderer.clearGrid();
+document.getElementById("clear").onclick = () => {
+    renderer.clearGrid();
+    document.getElementById("results").innerHTML = '';
+};

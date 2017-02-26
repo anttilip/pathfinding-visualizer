@@ -1,0 +1,61 @@
+#sidebar {
+	display: inline-block;
+	width: 100px;
+	float: left;
+}
+
+#speedSlider {
+	width: 20%;
+	display: inline;
+	vertical-align: middle;
+}
+
+#main-canvas {
+	margin: auto;
+	display: block;
+	position: relative;
+	border-radius: 10px;
+	border:1px solid #000000;
+}
+
+#controls {
+	padding: 0;
+	margin: auto;
+	display: block;
+	position: relative;
+	font-family: sans-serif;
+	width: 768px;
+}
+
+#sidebar {
+	float: left;
+	width: 400px;
+	margin-left: 5px;
+	margin-right: 5%;
+}
+
+#inner {
+	float:left;
+	padding: 0;
+	margin: auto;
+	display: block;
+	position: relative;
+	overflow:auto;
+	font-family: sans-serif;
+}
+
+#outer {
+	margin: 0 auto;
+	margin-top: 10px;
+	width: 1300px;
+}
+
+.prettyprint {
+	margin: 5px;
+	display: block;
+}
+
+body {
+	/*background-color: #384047;*/
+	font-family: sans-serif;
+}
