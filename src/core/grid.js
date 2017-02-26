@@ -165,7 +165,7 @@ class Grid {
         if (this.startNode !== undefined) {
             this.startNode.type = nodeType.TRAVERSABLE;
         }
-        this.nodes[x][y] = nodeType.START;
+        this.nodes[x][y].type = nodeType.START;
         this.startNode = this.nodes[x][y];
     }
 
@@ -173,7 +173,7 @@ class Grid {
         if (this.goalNode !== undefined) {
             this.goalNode.type = nodeType.TRAVERSABLE;
         }
-        this.nodes[x][y] = nodeType.GOAL;
-        this.startNode = this.nodes[x][y];
+        this.nodes[x][y].type = nodeType.GOAL;
+        this.goalNode = this.nodes[x][y];
     }
 }

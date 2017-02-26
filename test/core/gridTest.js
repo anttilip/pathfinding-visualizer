@@ -210,4 +210,32 @@ describe('Grid', function() {
             expect(grid.nodes[3][3].opened).to.be.false;
         });
     });
+
+    describe('Setting start & goal nodes', function() {
+        it('should set start node', function() {
+            let grid = new Grid(16);
+            let prevStart = grid.startNode;
+            grid.setStart(5, 5);
+            expect(grid.startNode).to.eql(grid.nodes[5][5]).and.not.eql(prevStart);
+        });
+
+        it('should set nodeType to START', function() {
+            let grid = new Grid(16);
+            grid.setStart(5, 5);
+            expect(grid.nodes[5][5].type).to.eql(nodeType.START);
+        });
+
+        it('should set goal node', function() {
+            let grid = new Grid(16);
+            let prevGoal = grid.goalNode;
+            grid.setGoal(5, 5);
+            expect(grid.goalNode).to.eql(grid.nodes[5][5]).and.not.eql(prevGoal);
+        });
+
+        it('should set nodeType to GOAL', function() {
+            let grid = new Grid(16);
+            grid.setGoal(5, 5);
+            expect(grid.nodes[5][5].type).to.eql(nodeType.GOAL);
+        });
+    });
 });
