@@ -60,6 +60,9 @@ ratkaistavia verkkoja.
 
 ## Lähteet
 [Wiki Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+
 [Wiki A\*](https://en.wikipedia.org/wiki/A*_search_algorithm)
+
 [A\* Heuristics](http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html)
+
 [Benchmark data](http://www.movingai.com/benchmarks/)
