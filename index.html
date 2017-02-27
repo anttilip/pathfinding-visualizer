@@ -11,31 +11,20 @@
 			<div id="sidebar">
 				<h1>Pathfinding visualizer</h1>
 				This website visualizes pathfinding algorithms.
-				</br>
-				</br>
-				Currently available algorithms are Dijkstra, A* with several
-				different heuristics, depth first and greedy best first.
-				</br>
-				</br>
-				A* is an extension to Dijkstra's algorithm and uses heuristics
+				</br></br>
+				Currently, available algorithms are Dijkstra, A* with several
+				different heuristics, depth-first and greedy best-first.
+				</br></br>
+				A* is an extension of Dijkstra's algorithm and uses heuristics
 				to determine which nodes should be visited next.
-				</br>
-				</br>
+				</br></br>
 				A* selects the path that minimizes <code>f(n) = g(n) + h(n)</code>,
 				</br>
 				where <code>n</code> is the last node on the path, <code>g(n)</code>
-				is the cost of path from the start node to n, and <code>h(n)</code> is a heuristic that
+				is the cost of the path from the start node to n, and <code>h(n)</code> is a heuristic that
 				estimates the cost of the cheapest path from n to the goal.
-				</br>
-				</br>
-				One of the most popular A* heuristic is Euclidean distance:
-				<pre class="prettyprint">
-// Euclidean distance
-function(node, goal) {
-    let dx = Math.abs(node.x - goal.x);
-    let dy = Math.abs(node.y - goal.y);
-    return Math.sqrt(dx * dx + dy * dy);
-}				</pre>
+				</br></br>
+				<p id="algoDescription"></p>
 			</div>
 			<div id="inner">
 		    	<canvas id="main-canvas"></canvas>
@@ -50,13 +39,13 @@ function(node, goal) {
 					  <option value=128>Large (128x128)</option>
 					  <option value=256>Huge (256x256)</option>
 					</select>
-					<select id='algo'>
-					  <option value=DIJKSTRA selected="selected">Dijkstra</option>
-					  <option value=ASTAR_OCTILE>A* (octile distance)</option>
+					<select id='algo' onchange="changeSidebarText()">
+					  <option value=ASTAR_OCTILE selected="selected">A* (octile distance)</option>
 					  <option value=ASTAR_EUCLIDEAN>A* (euclidean distance)</option>
 					  <option value=ASTAR_MANHATTAN>A* (manhattan distance)</option>
-					  <option value=BEST_FIRST>Best first (greedy)</option>
-					  <option value=DFS>Depth first (DFS)</option>
+                      <option value=DIJKSTRA>Dijkstra</option>
+					  <option value=BEST_FIRST>Best-first (greedy)</option>
+					  <option value=DFS>Depth-first (DFS)</option>
 					</select>
 				   Speed: <input id="speedSlider" type="range" min="1" max="100" value="1"></input>
 			   </div>
@@ -64,8 +53,7 @@ function(node, goal) {
 
 		</div>
 
-		<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
-
+		<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert&amp;autorun=false"></script>
 		<script src="src/data-structures/heap.js"></script>
 		<script src="src/data-structures/list.js"></script>
 		<script src="src/pathfinders/finder.js"></script>
@@ -77,5 +65,108 @@ function(node, goal) {
 		<script src="src/core/grid.js"></script>
 		<script src="src/core/visualizer.js"></script>
         <script src="src/core/renderer.js"></script>
+
+		<script>
+			let descriptions = {
+				'DIJKSTRA':  `<h3>Dijkstra</h3>
+				Dijkstra on this constant weighted grid is basically just
+				flood fill, which stores nodes in a heap.
+				It does not use heuristics to determine nodes that will be
+				checked next, i.e. it minimizes function
+				<code>f(n) = g(n)</code>. This is implemented such way that
+				h(n) always returns zero:</br>
+                <pre class="prettyprint">` +  ('' + Heuristics.NONE).replace(/\n\s\s\s\s/g, '\n') + `</pre>
+                </br>Read more from
+				<a href=https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm>
+				Wikipedia</a>.`,
+
+				'ASTAR_OCTILE': `<h3>A* octile distance</h3>
+				A* with octile distance heuristic is the best choice for this grid.
+				It always finds a shortest path only on grids which allow
+				moves in 8 directions and diagonal moves have a cost of SQRT(2).
+				</br></br>
+				Octile distance heuristic is defined by:</br>
+                <pre class="prettyprint">` +  ('' + Heuristics.OCTILE).replace(/\n\s\s\s\s/g, '\n') + `</pre>
+                </br>
+				Chebyshev distance is basically just octile distance, but diagonal
+				moves have a cost of 1 compared to SQRT(2) of octile distance.
+				</br></br>Read more on A* from
+				<a href="https://en.wikipedia.org/wiki/A*_search_algorithm">
+				Wikipedia</a> or octile distance from
+				<a href=http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#heuristics-for-grid-maps>
+				Amit’s A* Pages</a>.`,
+
+				'ASTAR_EUCLIDEAN': `<h3>A* Euclidean distance</h3>
+				Euclidean distance is the "correct" distance between two points
+				in a 2D grid. </br></br>
+				Euclidean is the most general of the shown A* heuristics and it
+				finds the shortest path in a grid which allows moves at any angle.
+				Thus it can find the shortest path also on this grid, which allows
+				only 8 different moves. </br></br>
+				Euclidean distance is a bit slower than octile distance on this
+				grid since it processes unnecessary nodes and its heuristic
+				has to calculate square root which is slower than operations on
+				other heuristics. </br></br>
+				Euclidean distance heuristic:</br>
+                <pre class="prettyprint">` +  ('' + Heuristics.EUCLIDEAN).replace(/\n\s\s\s\s/g, '\n') + `</pre>
+				</br>Read more on A* from
+				<a href="https://en.wikipedia.org/wiki/A*_search_algorithm">
+				Wikipedia</a> or Euclidean distance from
+				<a href=http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#heuristics-for-grid-maps>
+				Amit’s A* Pages</a>.`,
+
+				'ASTAR_MANHATTAN': `<h3>A* Manhattan distance</h3>
+				Manhattan distance between two points is the sum of absolute
+				differences of their Cartesian coordinates. Basically, it is just
+				a distance of two points when only four directions (up, down,
+				left, right) are allowed. </br></br>
+				Manhattan distance <strong>does not</strong> find a shortest path in a 8 direction
+				grid like this. It is included only for demonstration and should
+				only be used for grids with four directions. </br></br>
+				Manhattan distance heuristic:</br>
+                <pre class="prettyprint">` +  ('' + Heuristics.MANHATTAN).replace(/\n\s\s\s\s/g, '\n') + `</pre>
+                </br>Read more on A* from
+				<a href="https://en.wikipedia.org/wiki/A*_search_algorithm">
+				Wikipedia</a> or Manhattan distance from
+				<a href=http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#heuristics-for-grid-maps>
+				Amit’s A* Pages</a>.`,
+
+
+				'BEST_FIRST': `<h3>Greedy best-first</h3>
+				Greedy best-first search always processes found nodes closest to
+				the goal node. It is often quicker than other heuristics that
+				always find a shortest path. </br></br>
+				Sometimes Euclidean distance heuristic is implemented without
+				the square root and it degrades to greedy best-first search.</br></br>
+				Here I have implemented it that way and multiplied the squared
+				Euclidean distance with a large constant so that <code>h(n)</code>
+				dominates the <code>g(n)</code> in <code>f(n) = g(n) + h(n)</code>:</br>
+                <pre class="prettyprint">` +  ('' + Heuristics.SQUARED_EUCLIDEAN).replace(/\n\s\s\s\s/g, '\n') + `</pre>
+                </br>Read more from
+				<a href="https://en.wikipedia.org/wiki/Best-first_search">
+				Wikipedia</a>.`,
+
+				'DFS': `<h3>Depth-first search</h3>
+				Depth-first search moves from neighbour to neighbour until it
+				does not have any more neighbours and then backtracks to a node
+				that still has open neighbours. It does not use heuristics to
+				determine nodes that will be checked next, i.e. it minimizes function
+				<code>f(n) = g(n)</code>. Depth-first search is the only algorithm
+				shown here that does not use a heap as an internal data structure.
+				</br></br>Read more from
+				<a href="https://en.wikipedia.org/wiki/Depth-first_search">
+				Wikipedia</a>.`
+			}
+		</script>
+
+		<script>
+			function changeSidebarText() {
+				let algo = document.getElementById("algo").value
+				document.getElementById("algoDescription").innerHTML = descriptions[algo]
+				PR.prettyPrint();
+			}
+			changeSidebarText();
+		</script>
+
 	</body>
 </html>
