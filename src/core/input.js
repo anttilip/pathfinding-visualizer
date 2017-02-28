@@ -24,36 +24,58 @@ class Input {
         nodes.push(this.grid.nodes[x][y]);
         this.prevCoordinate = {x: x, y: y};
 
-        // Toggle all fouond nodes
-        nodes.array.forEach(node => {
-            // toggle node type, e.g. TRAVERSABLE -> WALL
-            this.grid.toggleNode(node.x, node.y);
-            // Draw changed node
-            node.draw(canvas.getContext('2d'), this.grid.nodeSize);
-        });
-
-        this._handleNodeDragging();
+        if (!this.draggedNode) {
+            // Toggle all found nodes
+            nodes.array.forEach(node => {
+                // toggle node type, e.g. TRAVERSABLE -> WALL
+                this.grid.toggleNode(node.x, node.y);
+                // Draw changed node
+                node.draw(canvas.getContext('2d'), this.grid.nodeSize);
+            });
+        } else {
+            this._handleNodeDragging(x, y);
+        }
     }
 
-    _handleNodeDragging() {
+    _handleNodeDragging(x, y) {
         if (renderer.mode == mode.EDIT) {
-            if (this.draggedNode === nodeType.START) {
-                // If user is dragging the start node, move it with mouse
-                this.grid.startNode.type = nodeType.TRAVERSABLE;
-                this.grid.nodes[x][y].type = nodeType.START;
-                this.grid.startNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
-                this.grid.startNode = this.grid.nodes[x][y];
-            } else if (this.draggedNode === nodeType.GOAL) {
-                // If user is dragging goal node, move it with mouse
-                this.grid.goalNode.type = nodeType.TRAVERSABLE;
-                this.grid.nodes[x][y].type = nodeType.GOAL;
-                this.grid.goalNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
-                this.grid.goalNode = this.grid.nodes[x][y];
+            let node = this.grid.nodes[x][y];
+            if (node.type === nodeType.TRAVERSABLE) {
+                if (this.draggedNode === nodeType.START) {
+                    this.grid.startNode.type = nodeType.TRAVERSABLE;
+                    this.grid.startNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
+                    this.grid.startNode = node;
+                } else {
+                    this.grid.goalNode.type = nodeType.TRAVERSABLE;
+                    this.grid.goalNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
+                    this.grid.goalNode = node;
+                }
+                node.type = this.draggedNode;
+                this.grid.nodes[x][y].draw(canvas.getContext('2d'), this.grid.nodeSize);
             }
         } else {
             this.grid.resetNodes();
             renderer.changeMode(mode.EDIT);
         }
+
+        //     if (this.draggedNode === nodeType.START && this.grid.nodes[x][y].type === nodeType.TRAVERSABLE) {
+        //         // If user is dragging the start node, move it with mouse
+        //         this.grid.startNode.type = nodeType.TRAVERSABLE;
+        //         this.grid.nodes[x][y].type = nodeType.START;
+        //         this.grid.startNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
+        //         this.grid.startNode = this.grid.nodes[x][y];
+        //     } else if (this.draggedNode === nodeType.GOAL && this.grid.nodes[x][y].type === nodeType.TRAVERSABLE) {
+        //         // If user is dragging goal node, move it with mouse
+        //         this.grid.goalNode.type = nodeType.TRAVERSABLE;
+        //         this.grid.nodes[x][y].type = nodeType.GOAL;
+        //         this.grid.goalNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
+        //         this.grid.goalNode = this.grid.nodes[x][y];
+        //     }
+        // } else {
+        //     this.grid.resetNodes();
+        //     renderer.changeMode(mode.EDIT);
+        // }
+        // this.grid.nodes[x][y].draw(canvas.getContext('2d'), this.grid.nodeSize);
     }
 
     _onSizeChange(size) {
