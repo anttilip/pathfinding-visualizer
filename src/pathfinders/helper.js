@@ -67,5 +67,10 @@ const config = {
         algo: DFS,
         heuristic: Heuristics.NONE,
         name: 'Depth-first (DFS)'
+    },
+    JPS_OCTILE: {
+        algo: JPS,
+        heuristic: Heuristics.OCTILE,
+        name: 'Jump point search (octile distance)'
     }
 };
