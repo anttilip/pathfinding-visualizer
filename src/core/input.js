@@ -9,12 +9,35 @@ class Input {
         this.grid = grid;
         this.isDragging = false;
         this.draggedNode = undefined;
+        this.prevCoordinate = undefined;
         this._createListeners(canvas);
     }
 
 
     // Manipulates the grid
     _onMouseInput(x, y) {
+        // Find all nodes that should be toggled
+        let nodes;
+        if (this.prevCoordinate !== undefined) {
+            nodes = this._findNodesBetweenPoints(this.prevCoordinate.x, this.prevCoordinate.y, x, y);
+        } else {
+            nodes = new List();
+            nodes.push(this.grid.nodes[x][y]);
+        }
+        this.prevCoordinate = {x: x, y: y};
+
+        // Toggle all fouond nodes
+        nodes.array.forEach(node => {
+            // toggle node type, e.g. TRAVERSABLE -> WALL
+            this.grid.toggleNode(node.x, node.y);
+            // Draw changed node
+            node.draw(canvas.getContext('2d'), this.grid.nodeSize);
+        });
+
+        this._handleNodeDragging();
+    }
+
+    _handleNodeDragging() {
         if (renderer.mode == mode.EDIT) {
             if (this.draggedNode === nodeType.START) {
                 // If user is dragging the start node, move it with mouse
@@ -29,10 +52,6 @@ class Input {
                 this.grid.goalNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
                 this.grid.goalNode = this.grid.nodes[x][y];
             }
-            // toggle node type, e.g. TRAVERSABLE -> WALL
-            this.grid.toggleNode(x, y);
-            // Draw changed node
-            this.grid.nodes[x][y].draw(canvas.getContext('2d'), this.grid.nodeSize);
         } else {
             this.grid.resetNodes();
             renderer.changeMode(mode.EDIT);
@@ -83,6 +102,7 @@ class Input {
             this.isDragging = false;
             this.draggedNode = undefined;
             this.grid.currentlyDrawing = false;
+            this.prevCoordinate = undefined;
         });
 
         canvas.addEventListener('mousemove', (evt) => {
@@ -95,5 +115,30 @@ class Input {
         document.getElementById("size").addEventListener('change', (evt) => {
             this._onSizeChange(evt.target.value);
         });
+    }
+
+    _findNodesBetweenPoints(x0, y0, x1, y1) {
+        // Bresenham's line algorithm
+        let dx = Math.abs(x1 - x0);
+        let dy = Math.abs(y1 - y0);
+        let sx = (x0 < x1) ? 1 : -1;
+        let sy = (y0 < y1) ? 1 : -1;
+        let err = dx - dy;
+
+        let nodes = new List();
+        while (x0 !== x1 || y0 != y1) {
+            nodes.push(this.grid.nodes[x0][y0]);
+
+            let e2 = 2 * err;
+            if (e2 > -dy) {
+                err -= dy;
+                x0  += sx;
+            }
+            if (e2 < dx) {
+                err += dx;
+                y0  += sy;
+            }
+        }
+        return nodes;
     }
 }
