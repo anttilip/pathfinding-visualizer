@@ -91,6 +91,7 @@ class Input {
     // Event listeners react to user input
     _createListeners(canvas) {
         canvas.addEventListener('mousedown', (evt) => {
+            evt.preventDefault();
             this.isDragging = true;
             let coord = this._mouseCoordinatesToGrid(this._getMouseCoordinates(evt));
             if (this.grid.nodes[coord.x][coord.y] === this.grid.startNode ||
