@@ -32,13 +32,15 @@ class Input {
                 // Draw changed node
                 node.draw(canvas.getContext('2d'), this.grid.nodeSize);
             });
-        } else {
-            this._handleNodeDragging(x, y);
         }
+        this._handleNodeDragging(x, y);
     }
 
     _handleNodeDragging(x, y) {
         if (renderer.mode == mode.EDIT) {
+            if (this.draggedNode === undefined) {
+                return;
+            }
             let node = this.grid.nodes[x][y];
             if (node.type === nodeType.TRAVERSABLE) {
                 if (this.draggedNode === nodeType.START) {
