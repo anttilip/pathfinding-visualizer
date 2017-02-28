@@ -75,9 +75,6 @@ class Node {
      */
     draw(context, nodeSize, color = undefined) {
         color = this.custom_color || this.type.color;
-        // if (color === undefined) {
-        //     color = this.type.color;
-        // }
         context.fillStyle = color;
         context.fillRect(this.x * nodeSize, this.y * nodeSize, nodeSize, nodeSize);
     }

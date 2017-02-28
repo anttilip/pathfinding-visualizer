@@ -39,7 +39,11 @@ class Visualizer {
     _visualizeSeen(context, speed) {
         for (let i = 0; i < speed && this.openedList.length !== 0; i++) {
             let node = this.openedList.pop();
-            node.custom_color = this.hslToStr(this._distanceToHSL(node.gScore), 100, 85);
+
+            if (node.type !== nodeType.START && node.type !== nodeType.GOAL) {
+                // Color all regular nodes by their gScore (distance from start)
+                node.custom_color = this.hslToStr(this._distanceToHSL(node.gScore), 100, 85);
+            }
             node.draw(context, this.grid.nodeSize);
         }
     }
@@ -51,9 +55,6 @@ class Visualizer {
     _visualizePath(context) {
         if (this.currentNode.parent === undefined) {
             this.visualizationComplete = true;
-            // Highlight start and goal nodes
-            this.grid.startNode.custom_color = '#339949';
-            this.grid.goalNode.custom_color = '#933';
             this.grid.startNode.draw(context, this.grid.nodeSize);
             this.grid.goalNode.draw(context, this.grid.nodeSize);
             return;

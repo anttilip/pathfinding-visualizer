@@ -59,25 +59,6 @@ class Input {
             this.grid.resetNodes();
             renderer.changeMode(mode.EDIT);
         }
-
-        //     if (this.draggedNode === nodeType.START && this.grid.nodes[x][y].type === nodeType.TRAVERSABLE) {
-        //         // If user is dragging the start node, move it with mouse
-        //         this.grid.startNode.type = nodeType.TRAVERSABLE;
-        //         this.grid.nodes[x][y].type = nodeType.START;
-        //         this.grid.startNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
-        //         this.grid.startNode = this.grid.nodes[x][y];
-        //     } else if (this.draggedNode === nodeType.GOAL && this.grid.nodes[x][y].type === nodeType.TRAVERSABLE) {
-        //         // If user is dragging goal node, move it with mouse
-        //         this.grid.goalNode.type = nodeType.TRAVERSABLE;
-        //         this.grid.nodes[x][y].type = nodeType.GOAL;
-        //         this.grid.goalNode.draw(canvas.getContext('2d'), this.grid.nodeSize);
-        //         this.grid.goalNode = this.grid.nodes[x][y];
-        //     }
-        // } else {
-        //     this.grid.resetNodes();
-        //     renderer.changeMode(mode.EDIT);
-        // }
-        // this.grid.nodes[x][y].draw(canvas.getContext('2d'), this.grid.nodeSize);
     }
 
     _onSizeChange(size) {
