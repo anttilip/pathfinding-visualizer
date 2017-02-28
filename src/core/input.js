@@ -17,13 +17,11 @@ class Input {
     // Manipulates the grid
     _onMouseInput(x, y) {
         // Find all nodes that should be toggled
-        let nodes;
+        let nodes = new List();
         if (this.prevCoordinate !== undefined) {
             nodes = this._findNodesBetweenPoints(this.prevCoordinate.x, this.prevCoordinate.y, x, y);
-        } else {
-            nodes = new List();
-            nodes.push(this.grid.nodes[x][y]);
         }
+        nodes.push(this.grid.nodes[x][y]);
         this.prevCoordinate = {x: x, y: y};
 
         // Toggle all fouond nodes
