@@ -162,33 +162,33 @@ describe('Grid', function() {
     describe('Node empty', function() {
         it('should tell that empty node is empty', function() {
             let grid = new Grid(16);
-            expect(grid._isTraversable(3, 3)).to.be.true;
+            expect(grid.isTraversable(3, 3)).to.be.true;
         });
 
         it('should tell that wall node is not empty', function() {
             let grid = new Grid(16);
             // wall to 5, 5
             grid.toggleNode(5, 5);
-            expect(grid._isTraversable(5, 5)).to.be.false;
+            expect(grid.isTraversable(5, 5)).to.be.false;
         });
 
         it('should tell that start node is not empty', function() {
             let grid = new Grid(16);
             // start node
             let start = grid.startNode;
-            expect(grid._isTraversable(start.x, start.y)).to.be.false;
+            expect(grid.isTraversable(start.x, start.y)).to.be.false;
         });
 
         it('should tell that goal node is empty', function() {
             let grid = new Grid(16);
             // goal node
-            expect(grid._isTraversable(15, 15)).to.be.true;
+            expect(grid.isTraversable(15, 15)).to.be.true;
         });
 
         it('should tell that out of bounds node is not empty', function() {
             let grid = new Grid(16);
             // // out of bounds
-            expect(grid._isTraversable(16, 15)).to.be.false;
+            expect(grid.isTraversable(16, 15)).to.be.false;
         });
     });
 

@@ -49,12 +49,12 @@ class AStar extends Finder {
             for (let i = 0; i < neighbours.length; i++) {
                 let neighbour = neighbours.get(i);
 
-                // If neighbour is already processed move to next neigbour
+                // If neighbour is already processed move to next neighbour
                 if (neighbour.closed) {
                     continue;
                 }
 
-                // Get neighours distance from current node
+                // Get neighbours distance from current node
                 let dist = this._getDistance(node, neighbour);
 
                 if (!neighbour.opened || dist < neighbour.gScore) {

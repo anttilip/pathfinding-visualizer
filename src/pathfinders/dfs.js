@@ -17,22 +17,22 @@ class DFS extends Finder {
 
             let neighbours = this.grid.getNodesNeighbours(node);
             for (let i = 0; i < neighbours.length; i++) {
-                let neigbour = neighbours.get(i);
+                let neighbour = neighbours.get(i);
 
-                let distance = this._getDistance(node, neigbour);
-                if (!neigbour.opened) {
-                    neigbour.opened = true;
-                    neigbour.parent = node;
-                    this.stack.push(neigbour);
-                    openedList.push(neigbour);
+                let distance = this._getDistance(node, neighbour);
+                if (!neighbour.opened) {
+                    neighbour.opened = true;
+                    neighbour.parent = node;
+                    this.stack.push(neighbour);
+                    openedList.push(neighbour);
                 }
-                if (distance < neigbour.gScore) {
-                    neigbour.gScore = distance;
+                if (distance < neighbour.gScore) {
+                    neighbour.gScore = distance;
                 }
 
-                if (this.grid.goalNode.equals(neigbour)) {
+                if (this.grid.goalNode.equals(neighbour)) {
                     return {
-                        path: this._backtrack(neigbour),
+                        path: this._backtrack(neighbour),
                         opened: openedList
                     };
                 }

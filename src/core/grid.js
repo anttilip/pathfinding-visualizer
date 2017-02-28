@@ -95,45 +95,45 @@ class Grid {
         let x = node.x;
         let y = node.y;
         // Left
-        if (this._isTraversable(x - 1, y)) {
+        if (this.isTraversable(x - 1, y)) {
             neighbours.push(this.nodes[x - 1][y]);
             left = true;
         }
         // Right
-        if (this._isTraversable(x + 1, y)) {
+        if (this.isTraversable(x + 1, y)) {
             neighbours.push(this.nodes[x + 1][y]);
             right = true;
         }
         // Top
-        if (this._isTraversable(x, y - 1)) {
+        if (this.isTraversable(x, y - 1)) {
             neighbours.push(this.nodes[x][y - 1]);
             top = true;
         }
         // Bottom
-        if (this._isTraversable(x, y + 1)) {
+        if (this.isTraversable(x, y + 1)) {
             neighbours.push(this.nodes[x][y + 1]);
             bottom = true;
         }
         // Top Left
-        if (this._isTraversable(x - 1, y - 1) && (top || left)) {
+        if (this.isTraversable(x - 1, y - 1) && (top || left)) {
             neighbours.push(this.nodes[x - 1][y - 1]);
         }
         // Top right
-        if (this._isTraversable(x + 1, y - 1) && (top || right)) {
+        if (this.isTraversable(x + 1, y - 1) && (top || right)) {
             neighbours.push(this.nodes[x + 1][y - 1]);
         }
         // Bottom left
-        if (this._isTraversable(x - 1, y + 1) && (bottom || left)) {
+        if (this.isTraversable(x - 1, y + 1) && (bottom || left)) {
             neighbours.push(this.nodes[x - 1][y + 1]);
         }
         // Bottom right
-        if (this._isTraversable(x + 1, y + 1) && (bottom || right)) {
+        if (this.isTraversable(x + 1, y + 1) && (bottom || right)) {
             neighbours.push(this.nodes[x + 1][y + 1]);
         }
         return neighbours;
     }
 
-    _isTraversable(x, y) {
+    isTraversable(x, y) {
         if (x < 0 || x > this.size - 1 || y < 0 || y > this.size - 1) {
             return false;
         }
