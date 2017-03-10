@@ -4,6 +4,7 @@ let mode = {
     IDLE: 2
 };
 
+/** Class that renders the webpage */
 class Renderer {
     constructor(canvas) {
         this.canvas = canvas;
@@ -17,7 +18,11 @@ class Renderer {
         this.mode = undefined;
         this.changeMode(mode.EDIT);
     }
-
+    
+    /**
+     * Update visualization.
+     * @param {number} speed - ticks per frame.
+     */
     update(speed) {
         if (this.mode == mode.VISUALIZE) {
             // Convert speed slider to logarithmic
@@ -28,6 +33,9 @@ class Renderer {
         }
     }
 
+    /**
+     * Run pathfinding algortihm.
+     */
     run() {
         // Reset nodes from previous search
         this.grid.resetNodes();
