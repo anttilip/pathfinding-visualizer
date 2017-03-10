@@ -144,35 +144,6 @@ kertaa nopeampi kuin vastaava A\* (octile) ja huone-pohjassa vastaavasti noin 13
 kertaa nopeampi.
 
 
-
-# ---------------------------
-
-Tässä projektissa esittämäni algoritmit voidaan jakaa niihin, jotka aina löytävät
-lyhyimmän reitin jos sellainen on ja niihin jotka eivät välttämättä löydä sitä.
-Aina lyhyimmän reitin löytävät algoritmit ovat Dijkstra, Jump point search ja
-AStar octile- ja Euclidean heuristiikoilla.
-
-
-
-
-Kaikista nopein aina lyhiymmän reitin löytävä algoritmi oli A\*
-Octile-heuristiikalla. Hieman octilea hitaampi oli Euclidean distance. Sen hitaus
-johtuu siitä, että se tarkastelee enemmän solmuja kuin on tarvittavaa ja lisäksi
-heursitiikafunktiossa joudutaan jatkuvasti laskemaan neliöjuurta joka on hidasta.
-Dijkstra on algoritmeista kaikista hitain lähinnä siksi, että se käy usein eniten
-solmuja läpi. Vaikka se ei käytä heuristikkaa, se silti säilöö solmut kekoon, jolloin
-se joutuu käyttämään log(n) operaatioita verrattuna esim DFS, joka selviää lineaarisilla
-operaatioilla. Keon käyttö on myös Dijkstran suurin ero BFS-algoritmiin.
-
-Loput algoritmit / heuristiikat eivät aina löydä lyhyintä polkua.
-Manhattan-etäisyys ei toimi optimaalisesti gridissä, jossa voi liikkua 8-suuntaan.
-Otin sen mukaan vain kuvaamaan heursitiikkafunktion eroja. Nopeudeltaan se on samaa
-tasoa kuin Octile, mutta erot riippuvat huomattavasti syötteestä. DFS, eli
-syvyyssuuntainen haku on yksinkertaisilla syötteillä usein nopein, vaikka lyhyimmän
-polun etsimiseen se on turha. Sen nopeus johtuu tietorakenteen lineaarisista
-operaatioista ja harvojen solmujen tarkistamisesta.
-
-
 ## Puutteet ja parannusehdotukset
 
 Hauska ominaisuus olisi se, että käyttäjä voisi ladata sivulle oman ASCII-merkkisen
