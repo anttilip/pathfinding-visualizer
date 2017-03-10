@@ -1,8 +1,13 @@
+/** Depth-first search algortihm */
 class DFS extends Finder {
     constructor(...opts) {
         super(...opts);
     }
 
+    /**
+     * Find shortest path in a grid.
+     * @return {{path:Node, opened:Node}[]} - Shortest path and all opened nodes.
+     */
     findShortestPath() {
         this.stack = new List();
         let openedList = new List();
