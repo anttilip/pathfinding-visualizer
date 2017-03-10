@@ -4,6 +4,10 @@ class JPS extends Finder {
         super(...opts);
     }
 
+    /**
+     * Find shortest path in a grid.
+     * @return {{path:Node, opened:Node}[]} - Shortest path and all opened nodes.
+     */
     findShortestPath() {
         this.openSet = new Heap();
         this.openedList = new List();
