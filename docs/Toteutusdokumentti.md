@@ -133,6 +133,8 @@ Jump point search |	191311
 ![](benchmark/random2150.png)
 
 
+### Tulokset
+
 Tulokset olivat melko odotettuja. Dijkstra on merkittävästi hitaampi kuin
 A\* millä tahansa heuristiikalla. Toisaalta A\* octile heuristiikka oli
 odotettavasti poikkeuksetta Euclidean distancea nopeampi. Tämä edelleen johtuu
