@@ -46,6 +46,8 @@ kaikilla pareilla.
 
 ### Dark Forest
 
+![Dark Forest](http://www.movingai.com/benchmarks/wc3maps512/darkforest.jpg)
+
 **100 paria**
 
 Algoritmi         | Aika (millisekunneissa)
@@ -73,6 +75,8 @@ Jump point search |	1876
 
 ### Rooms
 
+![Rooms](http://www.movingai.com/benchmarks/room16/16room_004.jpg)
+
 **100 paria**
 
 Algoritmi         | Aika (millisekunneissa)
@@ -99,6 +103,8 @@ Jump point search |	20933
 ![](benchmark/rooms1880.png)
 
 ### Random obstacles
+
+![Random obstacles](http://www.movingai.com/benchmarks/random35/random512-35-4.jpg)
 
 **100 paria**
 
